@@ -6,26 +6,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.sun.istack.NotNull;
+
 @Entity
 public class Role {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@Column
+	@NotNull
+    @Column(unique = true)
 	private String role;
 	
-	public Role() {
-	}
+	/*@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "username")
+	private Account user;*/
+	
+	public Role() {	}
 
-	public Role(Long id, String role) {
-		this.id = id;
+	public Role(String role) {
 		this.role = role;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	public String getRole() {
@@ -35,5 +36,9 @@ public class Role {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public Long getId() {
+		return id;
+	}	
 	
 }

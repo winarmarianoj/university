@@ -1,6 +1,5 @@
 package com.marianowinar.university.service.security;
 
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,12 +12,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{		
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+    UserDetailsServiceImpl userDetailsService;
+	
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    //Necesario para evitar que la seguridad se aplique a los resources
-    //Como los css, imagenes y javascripts
+    //Necesario para evitar que la seguridad se aplique a los resources    
     String[] resources = new String[]{
-            "/include/**","/css/**","/icons/**","/img/**","/js/**","/layer/**"
+            "/include/**","/css/**","/icons/**","/img/**","/js/**","/layer/**",
+            "/fonts/**", "/logos/**"
     };
 	
     @Override
@@ -26,9 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http
             .authorizeRequests()
 	        .antMatchers(resources).permitAll()  
-	        .antMatchers("/","/index").permitAll()
-	        .antMatchers("/admin*").access("hasRole('ADMIN')")
-	        .antMatchers("/user*").access("hasRole('USER') or hasRole('ADMIN')")
+	        .antMatchers("/","/index","/registers","/forgot","/registrate","/resultRegistered").permitAll()
+	        .antMatchers("/admin*").hasAnyRole("ROLE_ADMIN")
+	        .antMatchers("/user*").hasAnyRole("ROLE_USER")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -43,27 +47,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .permitAll()
                 .logoutSuccessUrl("/login?logout");
     }
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-    //Crea el encriptador de contraseñas	
+        
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-		bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
-//El numero 4 representa que tan fuerte quieres la encriptacion.
-//Se puede en un rango entre 4 y 31. 
-//Si no pones un numero el programa utilizara uno aleatoriamente cada vez
-//que inicies la aplicacion, por lo cual tus contrasenas encriptadas no funcionaran bien
-        return bCryptPasswordEncoder;
+    public BCryptPasswordEncoder passwordEncoder() {		
+        return new BCryptPasswordEncoder(4);
     }
-	
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
 	
     //Registra el service para usuarios y el encriptador de contrasena
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { 
- 
-        // Setting Service to find User in the database.
-        // And Setting PassswordEncoder
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());     
+    	auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());     
     }
 }

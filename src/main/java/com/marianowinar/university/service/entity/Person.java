@@ -1,54 +1,70 @@
 package com.marianowinar.university.service.entity;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 
 @Entity
-public class Person {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Person implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	@Column
+	@NotBlank
 	private String name;
 	
 	@Column
+	@NotBlank
 	private String surname;
 	
 	@Column
+	@NotBlank
 	private String phone;
 	
 	@Column
+	@NotBlank
 	private String email;
+	
+	@Column
+	@NotBlank
+	private String type;
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "username")
 	private Account account;
 	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "persons_materials", 	joinColumns = { @JoinColumn(name = "personId", nullable = false, updatable = false) },	inverseJoinColumns = { @JoinColumn(name = "materialId", nullable = false, updatable = false) })
+	private List<Material> materials;
+	
 	public Person() {}
 
-	public Person(Long id, String name, String surname, String phone, String email, Account account) {
-		this.id = id;
+	public Person(@NotBlank String name, @NotBlank String surname, @NotBlank String phone, @NotBlank String email,
+			@NotBlank String type, Account account, List<Material> materials) {
 		this.name = name;
 		this.surname = surname;
 		this.phone = phone;
 		this.email = email;
+		this.type = type;
 		this.account = account;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+		this.materials = materials;
 	}
 
 	public String getName() {
@@ -83,12 +99,34 @@ public class Person {
 		this.email = email;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public Account getAccount() {
 		return account;
 	}
 
 	public void setAccount(Account account) {
 		this.account = account;
-	}	
+	}
+
+	public List<Material> getMaterials() {
+		return materials;
+	}
+
+	public void setMaterials(List<Material> materials) {
+		this.materials = materials;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	
 	
 }
