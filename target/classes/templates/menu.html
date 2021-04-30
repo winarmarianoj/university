@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Hello World!</title>
+        
+        <!--JQUERY-->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	    
+	    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	    
+	    <!-- Los iconos tipo Solid de Fontawesome-->
+	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+	    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	
+	    <!-- Nuestro css-->
+	    <link rel="stylesheet" type="text/css" href="static/css/index.css" th:href="@{/css/index.css}">
+        
+    </head>
+    <body>
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        
+        <div class="modal-dialog text-center">
+        	<div class="col-md-12 main-section">
+            	<div class="modal-content">
+            	
+            		<section class="col-12 offset-fixed my-4">
+        
+			        	<div class="row">
+			                    
+			                     
+			                      <div class="col-md-12 col-md-offset-2">
+			                        <div class="description">
+			                          <h2>WELCOME</h2>
+			                        </div>
+			                        
+			                        <div class="fresh-table full-color-blue">
+			            
+			                          
+			                          <table id="fresh-table" class="table">
+			                            <thead>
+			                              <th>NAME</th>
+			                              <th>SURNAME</th>
+			                            </thead>
+			                            <tbody>
+			                                <tr data-th-each="person : ${persons}">
+			                                    <td data-th-text="${person.name}"></td>
+			                                    <td data-th-text="${person.surname}"></td>
+			                                </tr>
+			                            </tbody>
+			                          </table>
+			                        </div>                    
+			                      </div>			            
+			                  </div>   			        
+			        </section> 
+			        
+			        <section class="my-5">
+						<h3><a th:href="@{/admin/profile}"> GO   ADMIN</a>  |  <a th:href="@{/user/profile}">GO   USER</a></h3>	        
+			        </section>
+			        
+			        <section class="my-4">
+						<form th:action="@{/logout}" method="post">
+				           <input type="submit" value="Cerrar Sesion"/>
+				       </form>	        
+			        </section>
+			        
+            	</div>
+            </div>
+        </div>        
+              
+                
+    </body>
+</html>
