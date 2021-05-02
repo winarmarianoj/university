@@ -18,6 +18,9 @@ public class Account {
 	private String password;
 	
 	@Column
+	private String legajo;
+	
+	@Column
 	private boolean enabled;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -26,11 +29,12 @@ public class Account {
 	inverseJoinColumns=@JoinColumn(name="role_id"))
 	private Set<Role> roles;
 
-	public Account() {	}
+	public Account() {	}	
 
-	public Account(String username, String password, boolean enabled, Set<Role> roles) {
+	public Account(String username, String password, String legajo, boolean enabled, Set<Role> roles) {
 		this.username = username;
 		this.password = password;
+		this.legajo = legajo;
 		this.enabled = enabled;
 		this.roles = roles;
 	}
@@ -66,5 +70,13 @@ public class Account {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
+	public String getLegajo() {
+		return legajo;
+	}
+
+	public void setLegajo(String legajo) {
+		this.legajo = legajo;
+	}	
 		
 }

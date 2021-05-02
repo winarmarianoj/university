@@ -26,6 +26,7 @@ public class ValidAccount {
 		
 		validateDni(aco.getUsername());
 		validateLegajo(aco.getPassword());
+		validateLeg(aco.getLegajo());
 	}
 
 	public void validateLegajo(String legajo) throws InvalidPasswordAccountException {
@@ -39,6 +40,11 @@ public class ValidAccount {
 	public void validateDni(String dni) throws InvalidDniException {
 		if(dni == null)
 			throw new InvalidDniException("DNI es nulo");
-	}		
+	}	
+	
+	public void validateLeg(String legajo) throws InvalidDniException {
+		if(legajo == null)
+			throw new InvalidDniException("El Legajo es nulo");
+	}
 	
 }

@@ -11,8 +11,7 @@ import javax.validation.constraints.NotBlank;
 @PrimaryKeyJoinColumn(name = "personId")
 public class Professor extends Person{	
 	
-	@Column
-	@NotBlank
+	@Column	
 	private boolean active;
 	
 	public Professor() {}

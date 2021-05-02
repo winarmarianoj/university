@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marianowinar.university.service.entity.Person;
-import com.marianowinar.university.service.entity.Register;
+import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.entity.Account;
 
 @Service

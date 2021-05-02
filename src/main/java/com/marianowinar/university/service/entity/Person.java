@@ -1,6 +1,7 @@
 package com.marianowinar.university.service.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -67,6 +68,14 @@ public class Person implements Serializable{
 		this.materials = materials;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -122,11 +131,36 @@ public class Person implements Serializable{
 	public void setMaterials(List<Material> materials) {
 		this.materials = materials;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
 	
+	// METHODS AND FUNCTION GAME LIST	
+
+	public List<Material> getListMaterial() {
+        if (materials == null){materials = new ArrayList<>();}
+        return materials;
+    }
+
+    public void addMaterial(Material mat) {
+    	if (materials == null){materials = new ArrayList<>();}
+        materials.add(mat);
+    }  
+    public int listaMaterialSize(){
+    	if (materials == null){materials = new ArrayList<>();}
+        return materials.size();
+    }
+    public Material searchPerson(Long index){
+        if (index < 0 || index >= listaMaterialSize()){return null;}
+        Material aux = null;
+        for(Material ele : materials) {
+        	if(ele.getId() == index) {
+        		aux = ele;
+        	}
+        }
+        return aux;
+    }
+    public boolean removePerson(Long index){
+    	if (index < 0 || index >= listaMaterialSize()){return false;}
+        materials.remove(index);
+        return true;
+    }	
 	
 }

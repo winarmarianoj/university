@@ -10,16 +10,25 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.marianowinar.university.service.entity.source.Register;
+
 @Controller
 public interface Controllers<T>{
 	
 	public String getProfile(Model model, ModelMap mp) throws ServletException, IOException;
+	public String getResponse(ModelMap mp);
 	public String getUpdate(Model model, ModelMap mp) throws ServletException, IOException;
 	public String getDelete(Model model);
-	public String getLogout(Model model);
+	public String getDeleteConfirm();		
 	
+	public String postChangeProfile(@ModelAttribute Register entity, BindingResult result, ModelMap mp);
+	
+	
+	
+	
+	
+	public String getLogout(Model model);
 	public String postProfile(@ModelAttribute T entity, BindingResult result, ModelMap mp);
-	public String postChangeProfile(@ModelAttribute T entity, BindingResult result, ModelMap mp);
 	public String postDeleteProfile(@ModelAttribute T entity, BindingResult result);
 	public String postLogoutProfile(@ModelAttribute T entity, BindingResult result);
 	

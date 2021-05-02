@@ -1,4 +1,4 @@
-package com.marianowinar.university.service.entity;
+package com.marianowinar.university.service.entity.source;
 
 public class Register {
 	

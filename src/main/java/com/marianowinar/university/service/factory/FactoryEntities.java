@@ -1,8 +1,8 @@
 package com.marianowinar.university.service.factory;
 
-
 import com.marianowinar.university.service.entity.Person;
-import com.marianowinar.university.service.entity.Register;
+import com.marianowinar.university.service.entity.Professor;
+import com.marianowinar.university.service.entity.source.Register;
 
 public class FactoryEntities {
 	
@@ -25,19 +25,16 @@ public class FactoryEntities {
 		per.setType(entity.getType());
 		return per;
 	}
-	
 
-	/*
-	public ShareMaterial createShare(Material ele) {
-		ShareMaterial share = new ShareMaterial();
-		share.setCapacity(ele.getCapacity());
-		share.setDetail(ele.getDetail());
-		share.setHour(ele.getHour());
-		share.setName(ele.getName());
-		share.setShare(0);
-		share.setSubscribed(ele.getSubscribed());
-		return share;
+	public Professor createProfessor(Professor entity) {
+		Professor prof = new Professor();
+		prof.setActive(true);
+		prof.setEmail(entity.getEmail());
+		prof.setName(entity.getName());
+		prof.setPhone(entity.getPhone());
+		prof.setSurname(entity.getSurname());
+		prof.setType("Professor");
+		return prof;
 	}
-	*/
 
 }

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.marianowinar.university.repository.PersonRepository;
 import com.marianowinar.university.service.entity.Person;
-import com.marianowinar.university.service.entity.Register;
+import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.exception.person.PersonException;
 import com.marianowinar.university.service.factory.FactoryEntities;
@@ -51,24 +51,28 @@ public class PersonService implements Services<Person>{
 	}
 
 	@Override
-	public void update(Person entity) {
-		perRepo.save(entity);
+	public String update(Person entity) {
+		String message = "";
+		if(create(entity)) {
+			message = "La Persona fue modificada exitosamente en la BD!";
+		}else {
+			message = "No se pudo modificar o los datos son incorrectos.";
+		}
+		return message;
 	}
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		perRepo.deleteById(id);
+		if(existsById(id)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public List<Person> viewAll() {
 		return perRepo.findAll();
-	}
-	
-	@Override
-	public Person take(Long id) {		
-		return null;
 	}
 
 	@Override
@@ -77,7 +81,7 @@ public class PersonService implements Services<Person>{
 	}
 
 	@Override
-	public boolean existsById(long id) {
+	public boolean existsById(Long id) {
 		return perRepo.existsById(id);
 	}
 
@@ -95,15 +99,8 @@ public class PersonService implements Services<Person>{
 	 * @param us Account conectado
 	 * @return Person
 	 */
-	public Person findByPerson(Account us) {
-		Person person = new Person();
-		for(Person ele : viewAll()) {
-			if(ele.getAccount().getUsername().equals(us.getUsername())) {
-				person = ele;
-				break;
-			}
-		}
-		return person;
+	public Person findByPerson(Account us) {		
+		return perRepo.findByAccount(us);
 	}
 
 	/**

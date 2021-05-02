@@ -14,9 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import com.marianowinar.university.service.entity.Register;
 import com.marianowinar.university.service.entity.Role;
+import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.repository.AccountRepository;
 import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.enums.RoleName;
@@ -68,8 +67,14 @@ public class AccountService implements Services<Account>{
 	}
 
 	@Override
-	public void update(Account entity) {
-		// TODO Auto-generated method stub		
+	public String update(Account entity) {
+		String message = "";
+		if(create(entity)) {
+			message = "La Cuenta fue modificada exitosamente en la BD!";
+		}else {
+			message = "No se pudo modificar o los datos son incorrectos.";
+		}
+		return message;
 	}
 
 	@Override
@@ -82,11 +87,6 @@ public class AccountService implements Services<Account>{
 	public List<Account> viewAll() {
 		return accRepo.findAll();
 	}
-
-	@Override
-	public Account take(Long dni) {
-		return null;
-	}
 	
 	@Override
 	public Account getByName(String username){
@@ -94,7 +94,7 @@ public class AccountService implements Services<Account>{
     }
 	
 	@Override
-	public boolean existsById(long dni){
+	public boolean existsById(Long dni){
         return false;
     }
 
@@ -163,6 +163,7 @@ public class AccountService implements Services<Account>{
 		
 		account.setUsername(entity.getDni());
 		account.setEnabled(true);
+		account.setLegajo(entity.getLegajo());
 		
 		if(entity.getType().equals("Admin")) {
 			role = roleServ.getByRoleName(RoleName.ROLE_ADMIN).get();
@@ -174,8 +175,7 @@ public class AccountService implements Services<Account>{
 		roles.add(role);		
 		account.setRoles(roles);
 		
-		String encodedPassword = bCryptPasswordEncoder.encode(entity.getLegajo());
-		//String encodedPassword = pass.generateSecurePassword(entity.getLegajo());
+		String encodedPassword = bCryptPasswordEncoder.encode(entity.getLegajo());		
 		account.setPassword(encodedPassword);
 		
 		return account;

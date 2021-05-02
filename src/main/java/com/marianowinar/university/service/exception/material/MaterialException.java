@@ -2,6 +2,7 @@ package com.marianowinar.university.service.exception.material;
 
 @SuppressWarnings("serial")
 public class MaterialException extends Exception{
+	
 	protected int idError;
     protected String error;
 
@@ -11,7 +12,7 @@ public class MaterialException extends Exception{
     public MaterialException(String message) {
         super(message);
     }
-
+    
     public String getError(){
         return this.error;
     }

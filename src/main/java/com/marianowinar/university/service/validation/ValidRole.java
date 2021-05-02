@@ -25,7 +25,7 @@ public class ValidRole {
 		validateRole(role.getRole());		
 	}
 
-	private void validateRole(String role) throws InvalidRoleException {
+	private void validateRole(RoleName role) throws InvalidRoleException {
 		if(!role.equals(RoleName.ROLE_ADMIN) && !role.equals(RoleName.ROLE_USER))
 			throw new InvalidRoleException(role);
 	}

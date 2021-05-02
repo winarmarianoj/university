@@ -57,8 +57,18 @@ public class Material implements Serializable{
 		return materialId;
 	}	
 	
+	
+	
 	public String getName() {
 		return name;
+	}
+
+	public Long getMaterialId() {
+		return materialId;
+	}
+
+	public void setMaterialId(Long materialId) {
+		this.materialId = materialId;
 	}
 
 	public void setName(String name) {

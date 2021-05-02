@@ -37,7 +37,7 @@ public class ValidPerson {
 		if(type == null)
 			throw new InvalidTypePersonException("Tipo de Usuario es nulo");
 		
-		if(!type.equals("Admin") && !type.equals("Student"))
+		if(!type.equals("Admin") && !type.equals("Student") && !type.equals("Professor"))
             throw new InvalidTypePersonException("type");
 	}
 	

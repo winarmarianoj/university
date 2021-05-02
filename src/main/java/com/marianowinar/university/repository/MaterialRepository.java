@@ -7,5 +7,7 @@ import com.marianowinar.university.service.entity.Material;
 
 @Repository
 public interface MaterialRepository extends JpaRepository<Material, Long>{
-
+	boolean existsByName(String name);
+	Material findByName(String name);
+	boolean existsById(Long id);
 }

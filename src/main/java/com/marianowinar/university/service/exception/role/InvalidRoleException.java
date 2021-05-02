@@ -6,7 +6,7 @@ import com.marianowinar.university.service.enums.RoleName;
 
 @SuppressWarnings("serial")
 public class InvalidRoleException extends RoleException{
-	public InvalidRoleException(String role){
+	public InvalidRoleException(RoleName role){
         idError = 12;
         String currentTime = LocalDateTime.now().toString().replace("T", " ");
         setError("["+ currentTime +"] Error " + idError + " :" + role + " no es un rol valido.");

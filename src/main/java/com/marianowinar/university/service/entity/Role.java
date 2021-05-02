@@ -2,10 +2,13 @@ package com.marianowinar.university.service.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.marianowinar.university.service.enums.RoleName;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -16,24 +19,21 @@ public class Role {
 	private Long id;
 	
 	@NotNull
+    @Enumerated(EnumType.STRING)
     @Column(unique = true)
-	private String role;
-	
-	/*@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "username")
-	private Account user;*/
+	private RoleName role;
 	
 	public Role() {	}
 
-	public Role(String role) {
+	public Role(RoleName role) {
 		this.role = role;
 	}
 
-	public String getRole() {
+	public RoleName getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(RoleName role) {
 		this.role = role;
 	}
 

@@ -23,7 +23,7 @@ import com.marianowinar.university.service.application.AppService;
 import com.marianowinar.university.service.application.PersonService;
 import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.entity.Person;
-import com.marianowinar.university.service.entity.Register;
+import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.util.UserConnectedService;
 
 @Controller
@@ -51,14 +51,9 @@ public class AppController {
 	}
 	
 	@GetMapping("/menu")
-	public String hello(Model model, ModelMap mp) {
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    //UserDetails userDetail = (UserDetails) auth.getPrincipal();	
-	    //Account acc = userRepo.findByUsername(userDetail.getUsername()).orElseThrow(() -> new UsernameNotFoundException("No existe usuario"));
-	    Person person = userConnected.personConected();
-	    
-		model.addAttribute("person", new Person());
-		
+	public String hello(Model model, ModelMap mp) {		
+	    Person person = userConnected.personConected();	    
+		model.addAttribute("person", new Person());		
 		List<Person> list = new ArrayList<>();
 		list.add(person);
 		mp.put("persons", list);		

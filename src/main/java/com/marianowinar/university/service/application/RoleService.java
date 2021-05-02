@@ -44,8 +44,8 @@ public class RoleService implements Services<Role>{
 	}
 
 	@Override
-	public void update(Role entity) {
-		// TODO Auto-generated method stub
+	public String update(Role entity) {
+		return null;
 	}
 
 	@Override
@@ -60,17 +60,12 @@ public class RoleService implements Services<Role>{
 	}
 
 	@Override
-	public Role take(Long id) {
-		return null;
-	}
-
-	@Override
 	public Role getByName(String roleName) {
 		return null;
 	}
 
 	@Override
-	public boolean existsById(long id) {
+	public boolean existsById(Long id) {
 		return roleRepo.existsById(id);
 	}
 
