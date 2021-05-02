@@ -15,8 +15,7 @@ public interface Task<T> {
 	public String getIdDelete(@PathVariable("id") Long id, Model model, ModelMap mp);
 	public String getIdAddMaterial(@PathVariable("id") Long id, Model model, ModelMap mp);
 	public String getIdDeleteMaterial(@PathVariable("id") Long id);
-	public String getListProfMat(@PathVariable("id") Long id, Model model, ModelMap mp);
-		
+	public String getListProfMat(@PathVariable("id") Long id, Model model, ModelMap mp);		
 	public String postRegister(T entity, BindingResult result);
 	public String postChangeProfile(@ModelAttribute T entity, BindingResult result);	
 }

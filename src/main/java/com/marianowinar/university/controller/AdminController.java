@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,6 @@ import com.marianowinar.university.service.application.AccountService;
 import com.marianowinar.university.service.application.AdminService;
 import com.marianowinar.university.service.application.AppService;
 import com.marianowinar.university.service.application.PersonService;
-import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.util.UserConnectedService;
@@ -100,29 +98,19 @@ public class AdminController implements Controllers<Person>{
 		return destiny;
 	}
 	
+	@Override
 	@GetMapping("/ListStudent")
 	public String getListStudent(ModelMap mp) {
 		mp.put("persons", admServ.studentOrdenar());
 		return "/admins/ListOrderStudent";
 	}
 	
+	@Override
 	@GetMapping("/quotas")
 	public String getShare(ModelMap mp) {
 		mp.put("quotas", admServ.matOrdenarQuota());
 		return "/admins/quotaMaterial";
 	}	
-
-	@Override
-	public String getLogout(Model model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String postProfile(Person entity, BindingResult result, ModelMap mp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	@PostMapping(value = "/changeProfile")
@@ -135,18 +123,6 @@ public class AdminController implements Controllers<Person>{
 			destiny= "redirect:/admin/response";	
 		}		
 		return destiny;
-	}
-
-	@Override	
-	public String postDeleteProfile(Person entity, BindingResult result) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String postLogoutProfile(Person entity, BindingResult result) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	}	
 
 }

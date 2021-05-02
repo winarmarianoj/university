@@ -23,6 +23,7 @@ import com.marianowinar.university.service.application.AppService;
 import com.marianowinar.university.service.application.PersonService;
 import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.entity.Person;
+import com.marianowinar.university.service.entity.source.Forgot;
 import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.util.UserConnectedService;
 
@@ -61,8 +62,8 @@ public class AppController {
 	}
 	
 	@GetMapping("/forgot")
-	public String user(Model model) {
-		model.addAttribute("user", new Account());
+	public String forgot(Model model) {
+		model.addAttribute("forgot", new Forgot());
 		return "forgot";
 	}
 	
@@ -72,7 +73,7 @@ public class AppController {
 		return "register";
 	}
 	
-	@GetMapping("/resultRegistered")
+	@GetMapping("/results")
 	public String messageResult(ModelMap mp) {
 		this.messageList = new ArrayList<>();
 		messageList.add(this.messages);
@@ -88,7 +89,20 @@ public class AppController {
 			destiny = "redirect:/registers";
 		}else {
 			this.messages = appServ.registered(entity);
-			destiny = "redirect:/resultRegistered";
+			destiny = "redirect:/results";
+		}
+		return destiny;
+	}
+	
+	@PostMapping("/changeForgot")
+	public String changePass(@ModelAttribute Forgot entity, BindingResult result) {
+		String destiny = "";
+		
+		if(result.hasErrors()) {
+			destiny = "redirect:/forgot";
+		}else {
+			this.messages = appServ.forgotNew(entity);
+			destiny = "redirect:/results";
 		}
 		return destiny;
 	}

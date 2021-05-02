@@ -2,13 +2,9 @@ package com.marianowinar.university.service.application;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,14 +39,12 @@ public class AccountService implements Services<Account>{
 	private Errors errors;
 	private FactoryEntities factory;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	private PasswordEncryptor pass;
 	
 	public AccountService(BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.valAcc = ValidAccount.getInstance();
 		this.errors = Errors.getInstance();
 		this.factory = FactoryEntities.getInstance();
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-		this.pass = PasswordEncryptor.getInstance();
 	}
 
 	@Override
@@ -126,18 +120,13 @@ public class AccountService implements Services<Account>{
 	/*
 	 * Se muestra los datos en el Menu y otros
 	 */
-	public Account findByUser(String name) { //UserMain userMain
+	public Account findByUser(String name) {
 		Account account = new Account();
 		for(Account ele : viewAll()) {
 			if(ele.getUsername().equals(name)) {
 				account = ele;
 				break;
 			}
-		}
-				
-		System.out.print("ACAAAAAAAAAAA ESTOY EN ACCOUNT - SERVICE FUNCT FINDBYUSER" + " " + account.getUsername());
-		for(Role ele : account.getRoles()) {
-			System.out.println("Role del usu" + " " + ele.getRole());
 		}
 		return account;
 	}

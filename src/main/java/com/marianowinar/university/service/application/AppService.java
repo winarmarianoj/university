@@ -1,9 +1,11 @@
 package com.marianowinar.university.service.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marianowinar.university.service.entity.Person;
+import com.marianowinar.university.service.entity.source.Forgot;
 import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.entity.Account;
 
@@ -15,6 +17,12 @@ public class AppService {
 	
 	@Autowired
 	PersonService perServ;	
+	
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	public AppService(BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
 
 	/**
 	 * Registramos Account y Person nuevos
@@ -32,6 +40,17 @@ public class AppService {
 			message = "La Cuenta se ha creado satisfactoriamente. Puede loguearse!!! Bienvenido al Sitio";
 		}else {
 			message = "Ha cargado datos erróneos, vuelva a intentarlo.";
+		}
+		return message;
+	}
+
+	public String forgotNew(Forgot entity) {
+		String message = "Password incorrecto o no son iguales";
+		Account acc = accServ.takeUser(entity.getDni());
+		if(entity.getPassword().equals(entity.getPassword2())) {
+			String encodedPassword = bCryptPasswordEncoder.encode(entity.getPassword());		
+			acc.setPassword(encodedPassword);
+			message = accServ.update(acc);
 		}
 		return message;
 	}

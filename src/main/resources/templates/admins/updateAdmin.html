@@ -126,27 +126,27 @@
                                         
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="name" >Nombre</label>
-                                            <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="" value="${per.name}" required>                                            
+                                            <input th:field="*{name}" type="text" class="form-control" id="name" required>                                            
                                         </div>
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="surname">Apellido</label>
-                                            <input th:field="*{surname}" type="text" class="form-control" id="surname" value="${per.surname}" placeholder=>                                            
+                                            <input th:field="*{surname}" type="text" class="form-control" id="surname" required>                                            
                                         </div>                                        
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="phone">Teléfono</label>
-                                            <input th:field="*{phone}" type="text" class="form-control" id="phone" value="${per.phone}" placeholder=>
+                                            <input th:field="*{phone}" type="text" class="form-control" id="phone" >
                                         </div>
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="email">Email</label>
-                                            <input th:field="*{email}" type="email" class="form-control" id="email" value="${per.email}" placeholder=>
+                                            <input th:field="*{email}" type="email" class="form-control" id="email" >
                                         </div>
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="dni">D.N.I.</label>
-                                            <input th:field="*{dni}" type="text" class="form-control" id="dni" value="${per.getAccount().getDni()}" placeholder=>
+                                            <input th:field="*{dni}" type="text" class="form-control" id="dni" >
                                         </div>
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="legajo">Nro Legajo</label>
-                                            <input th:field="*{legajo}" type="text" class="form-control" id="legajo" value="${per.getAccount().getLegajo()}" placeholder=>
+                                            <input th:field="*{legajo}" type="text" class="form-control" id="legajo" >
                                         </div>
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="typo">Indique Tipo Usuario:</label>

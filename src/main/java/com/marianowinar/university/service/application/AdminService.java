@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.marianowinar.university.service.entity.Material;
 import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.source.Quota;
+import com.marianowinar.university.service.factory.FactoryEntities;
 
 @Service
 public class AdminService {
@@ -21,39 +22,41 @@ public class AdminService {
 	@Autowired
 	MaterialService matServ;
 	
-	private List<Person> sutdentList;
-	private List<Quota> quotaList;
+	private FactoryEntities factory;
 	
 	public AdminService() {
-		this.sutdentList = new ArrayList<>();
-		this.quotaList = new ArrayList<>();
+		this.factory = FactoryEntities.getInstance();
 	}
 
 	public List<Person> studentOrdenar(){
+		List<Person> sutdentList = new ArrayList<>();
 		for(Person ele : perServ.viewAll()) {
 			if(ele.getType().equals("STUDENT")) {
-				this.sutdentList.add(ele);
+				sutdentList.add(ele);
 			}
 		}		
-		Collections.sort(this.sutdentList, new Comparator<Person>() {
+		Collections.sort(sutdentList, new Comparator<Person>() {
 			   public int compare(Person obj1, Person obj2) {
 				   return obj1.getSurname().compareTo(obj2.getSurname());
 			   }
 			});
-		return this.sutdentList;
+		return sutdentList;
 	}
 	
 	public List<Quota> matOrdenarQuota() {
+		List<Quota> quotaList = new ArrayList<>(); 
 		for(Material ele : matServ.viewAll()) {
-			Quota quota = (Quota) ele;
+			Quota quota = factory.createQuota(ele);
+			
 			quota.setQuota(Integer.parseInt(ele.getCapacity()) - Integer.parseInt(ele.getSubscribed()));
-			this.quotaList.add(quota);
+			quotaList.add(quota);
 		}
-		Collections.sort(this.quotaList, new Comparator<Quota>() {
+		Collections.sort(quotaList, new Comparator<Quota>() {
 			   public int compare(Quota obj1, Quota obj2) {
 				   return obj1.getName().compareTo(obj2.getName());
 			   }
 			});
-		return this.quotaList;
+		return quotaList;
 	}
+	
 }

@@ -1,7 +1,9 @@
 package com.marianowinar.university.service.factory;
 
+import com.marianowinar.university.service.entity.Material;
 import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.Professor;
+import com.marianowinar.university.service.entity.source.Quota;
 import com.marianowinar.university.service.entity.source.Register;
 
 public class FactoryEntities {
@@ -35,6 +37,17 @@ public class FactoryEntities {
 		prof.setSurname(entity.getSurname());
 		prof.setType("Professor");
 		return prof;
+	}
+
+	public Quota createQuota(Material ele) {
+		Quota quota = new Quota();
+		quota.setCapacity(ele.getCapacity());
+		quota.setDetail(ele.getDetail());
+		quota.setHour(ele.getHour());
+		quota.setMaterialId(ele.getMaterialId());
+		quota.setName(ele.getName());
+		quota.setSubscribed(ele.getSubscribed());
+		return quota;
 	}
 
 }

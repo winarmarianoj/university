@@ -121,23 +121,25 @@
                           <h2>LISTADO DE ESTUDIANTES INSCRIPTOS</h2>
                         </div>
                         
-                        <div class="fresh-table full-color-blue">
+                        <div class="fresh-table full-color-orange">
                         
                           <table id="fresh-table" class="table">
                             <thead>
-                              <th>DNI</th>
+                              <th>ID</th>
                               <th>NAME</th>
                               <th>SURNAME</th>
                               <th>PHONE</th>
                               <th>EMAIL</th>
+                              <th>TYPE</th>
                             </thead>
                             <tbody>
                                 <tr data-th-each="person : ${persons}">
-                                    <td data-th-text="${person.dni}"></td>
+                                    <td data-th-text="${person.id}"></td>
                                     <td data-th-text="${person.name}"></td>
                                     <td data-th-text="${person.surname}"></td>
                                     <td data-th-text="${person.phone}"></td>
                                     <td data-th-text="${person.email}"></td>
+                                    <td data-th-text="${person.type}"></td>
                                 </tr>
                             </tbody>
                           </table>
