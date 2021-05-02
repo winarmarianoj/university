@@ -68,7 +68,6 @@ public class ValidMaterial {
 		int hours = Integer.parseInt(hour);
 		if(hours < 0 && hours > 24) 
 			throw new InvalidHourException("La hora es incorrecta");		
-	}	
-	
+	}		
 	
 }

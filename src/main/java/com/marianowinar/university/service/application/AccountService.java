@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +15,8 @@ import com.marianowinar.university.repository.AccountRepository;
 import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.enums.RoleName;
 import com.marianowinar.university.service.exception.account.AccountException;
-import com.marianowinar.university.service.factory.FactoryEntities;
 import com.marianowinar.university.service.interfaces.Services;
 import com.marianowinar.university.service.logger.Errors;
-import com.marianowinar.university.service.util.PasswordEncryptor;
 import com.marianowinar.university.service.validation.ValidAccount;
 
 @Service
@@ -37,13 +34,11 @@ public class AccountService implements Services<Account>{
 	
 	private ValidAccount valAcc;
 	private Errors errors;
-	private FactoryEntities factory;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public AccountService(BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.valAcc = ValidAccount.getInstance();
 		this.errors = Errors.getInstance();
-		this.factory = FactoryEntities.getInstance();
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
@@ -57,7 +52,7 @@ public class AccountService implements Services<Account>{
 		}catch(AccountException e) {
 			errors.logError(e.getError());
 		}
-		return false;
+		return res;
 	}
 
 	@Override
@@ -73,7 +68,6 @@ public class AccountService implements Services<Account>{
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

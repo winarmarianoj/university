@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,12 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.marianowinar.university.repository.AccountRepository;
-import com.marianowinar.university.repository.PersonRepository;
 import com.marianowinar.university.service.application.AccountService;
 import com.marianowinar.university.service.application.AppService;
 import com.marianowinar.university.service.application.PersonService;
-import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.source.Forgot;
 import com.marianowinar.university.service.entity.source.Register;
@@ -42,8 +35,6 @@ public class AppController {
 	@Autowired
 	UserConnectedService userConnected;
 	
-	private List<Person> list;
-	private List<String> messageList;
 	private String messages;
 
 	@GetMapping({"/", "/login"})
@@ -75,7 +66,7 @@ public class AppController {
 	
 	@GetMapping("/results")
 	public String messageResult(ModelMap mp) {
-		this.messageList = new ArrayList<>();
+		List<String> messageList = new ArrayList<>();
 		messageList.add(this.messages);
 		mp.put("messagess", messageList);
 		return "message";

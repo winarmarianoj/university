@@ -23,15 +23,9 @@ public class UserConnectedService {
 	UserDetails userDetails;
 	
 	public String userConected() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();		
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 	    String name = loggedInUser.getName(); 
-		
-		/*userDetails = (UserDetails) principal;
-		if (principal instanceof UserDetails) {
-		  userDetails = (UserDetails) principal;
-		}*/		
 		return name;
 	}
 	
@@ -44,5 +38,4 @@ public class UserConnectedService {
 		
 		return perServ.findByPerson(account); 
 	}
-
 }

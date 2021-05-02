@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.marianowinar.university.controller.interfaces.Task;
 import com.marianowinar.university.service.application.MaterialService;
 import com.marianowinar.university.service.application.ProfessorService;
-import com.marianowinar.university.service.entity.Material;
-import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.Professor;
 import com.marianowinar.university.service.entity.source.AddMaterial;
 

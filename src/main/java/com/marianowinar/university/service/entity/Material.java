@@ -1,6 +1,5 @@
 package com.marianowinar.university.service.entity;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +55,6 @@ public class Material implements Serializable{
 	public Long getId() {
 		return materialId;
 	}	
-	
-	
 	
 	public String getName() {
 		return name;

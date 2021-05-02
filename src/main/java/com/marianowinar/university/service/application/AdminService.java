@@ -35,7 +35,7 @@ public class AdminService {
 	public List<Person> studentOrdenar(){
 		List<Person> sutdentList = new ArrayList<>();
 		for(Person ele : perServ.viewAll()) {
-			if(ele.getType().equals("STUDENT")) {
+			if(ele.getType().equals("Student")) {
 				sutdentList.add(ele);
 			}
 		}		

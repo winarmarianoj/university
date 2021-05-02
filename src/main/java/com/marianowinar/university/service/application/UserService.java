@@ -7,13 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marianowinar.university.repository.UserRepository;
-import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.entity.Material;
 import com.marianowinar.university.service.entity.Person;
-import com.marianowinar.university.service.entity.Professor;
 import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.exception.person.PersonException;
-import com.marianowinar.university.service.factory.FactoryEntities;
 import com.marianowinar.university.service.interfaces.Services;
 import com.marianowinar.university.service.logger.Errors;
 import com.marianowinar.university.service.validation.ValidPerson;
@@ -35,12 +32,10 @@ public class UserService implements Services<Person>{
 	
 	private ValidPerson valPer;
 	private Errors errors;
-	private FactoryEntities factory;
 	
 	public UserService() {
 		this.valPer = ValidPerson.getInstance();
 		this.errors = Errors.getInstance();
-		this.factory = FactoryEntities.getInstance();
 	}
 
 	@Override
@@ -54,7 +49,7 @@ public class UserService implements Services<Person>{
 		}catch(PersonException e) {
 			errors.logError(e.getError());
 		}
-		return false;
+		return res;
 	}
 
 	@Override
@@ -101,11 +96,6 @@ public class UserService implements Services<Person>{
 		message = message + " " + perServ.updatePerson(entity);
 		return message;
 	}
-	
-	// TODO REVISAR CANTIDAD DE INSCRIPTOS SI HAY CUPO Y SI NO ESTA INSCRIPTO YA EL STU X MAT Y HORARIO
-	// TODO SUMAR SUSCRIPTO
-	// TODO RESTAR CUANDO SE DA DE BAJA
-	// TODO NO SUPERE CANT MAX DE PARTICIPANTES....SINO NO HAY CUPO
 
 	/**
 	 * Función que Agrega una Materia a un Student
@@ -117,13 +107,45 @@ public class UserService implements Services<Person>{
 		String message = "";
 		Material mat = matServ.searchingMaterial(id);
 		
+		int capacity = Integer.parseInt(mat.getCapacity());
+		int subscribed = Integer.parseInt(mat.getSubscribed());
 		
-		
-		stu.addMaterial(mat);
-		mat.addPerson(stu);
-		message = matServ.update(mat);
-		message = message + " " + update(stu);
+		if(capacity > subscribed && !notSubscribed(stu,mat) && !distintHour(stu,mat)) {
+			subscribed++;
+			mat.setSubscribed(String.valueOf(subscribed));
+			stu.addMaterial(mat);
+			mat.addPerson(stu);
+			message = matServ.update(mat);
+			message = message + " " + update(stu);
+		}else {
+			message = "No puede inscribirse a la materia ya que se ha ocupado por completo el cupo de la misma, "
+					+ "que es hasta " + " " + capacity + " " + " personas. Además puede ser que otra materia esté"
+							+ "como esta a la misma hora y ya estas inscripto en ese horario para otra materia."
+							+ "Revisa tu lista de materias inscriptos y vuelve a intentarlo en su defecto. Gracias.";
+		}
 		return message;
+	}
+
+	private boolean distintHour(Person stu, Material mat) {
+		boolean res = false;
+		for(Material ele : stu.getListMaterial()) {
+			if(ele.getHour().equals(mat.getHour())) {
+				res = true;
+				break;
+			}
+		}
+		return res;
+	}
+
+	private boolean notSubscribed(Person stu, Material mat) {
+		boolean res = false;
+		for(Material ele : stu.getListMaterial()) {
+			if(ele.getName().equals(mat.getName())) {
+				res = true;
+				break;
+			}
+		}
+		return res;
 	}
 
 	/**
@@ -137,6 +159,10 @@ public class UserService implements Services<Person>{
 		Material mat = matServ.searchingMaterial(id);
 		stu.getMaterials().remove(id);		
 		mat.getListPerson().remove(stu.getId());
+		
+		int subscribed = Integer.parseInt(mat.getSubscribed());
+		subscribed--;
+		mat.setSubscribed(String.valueOf(subscribed));
 		message = matServ.update(mat);
 		message = message + " " + update(stu);
 		return message;

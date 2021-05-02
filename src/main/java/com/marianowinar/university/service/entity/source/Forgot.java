@@ -1,6 +1,5 @@
 package com.marianowinar.university.service.entity.source;
 
-
 public class Forgot {
 	
 	private String dni;	

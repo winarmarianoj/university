@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.marianowinar.university.repository.ProfessorRepository;
 import com.marianowinar.university.service.entity.Material;
-import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.Professor;
 import com.marianowinar.university.service.entity.source.AddMaterial;
-import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.exception.person.PersonException;
 import com.marianowinar.university.service.factory.FactoryEntities;
 import com.marianowinar.university.service.interfaces.Services;
@@ -167,8 +165,7 @@ public class ProfessorService implements Services<Professor>{
 			addMat.setNameMaterial(ele.getName());
 			addMat.setDetails(ele.getDetail());
 			addMatList.add(addMat);
-		}
-		
+		}		
 		return addMatList;
 	}
 	

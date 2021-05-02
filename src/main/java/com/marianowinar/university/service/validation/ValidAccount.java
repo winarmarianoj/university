@@ -1,7 +1,5 @@
 package com.marianowinar.university.service.validation;
 
-import java.util.regex.Pattern;
-
 import com.marianowinar.university.service.entity.Account;
 import com.marianowinar.university.service.exception.account.AccountException;
 import com.marianowinar.university.service.exception.account.InvalidDniException;
@@ -32,9 +30,6 @@ public class ValidAccount {
 	public void validateLegajo(String legajo) throws InvalidPasswordAccountException {
 		if(legajo == null)
 			throw new InvalidPasswordAccountException("Legajo es nulo");
-		
-		/*if (!Pattern.matches("^([a-zA-Z0-9-._ñ]+)$",legajo)) 
-        	throw new InvalidPasswordAccountException(legajo);*/
 	}
 
 	public void validateDni(String dni) throws InvalidDniException {

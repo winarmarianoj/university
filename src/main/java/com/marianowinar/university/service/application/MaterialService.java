@@ -36,7 +36,7 @@ public class MaterialService implements Services<Material>{
 		}catch(MaterialException e) {
 			errors.logError(e.getError());
 		}
-		return false;
+		return res;
 	}
 
 	@Override
