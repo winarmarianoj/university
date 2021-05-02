@@ -87,7 +87,8 @@
 
         <section class="col-12 offset-fixed">
             <a class="btn btn-yellow" href="/user/student/update">Update Profile</a>
-            <a class="btn btn-yellow" href="/user/student/delete">Delete Profile</a>
+            <a class="btn btn-success" href="/user/student/delete">Delete Profile</a>
+            <a class="btn btn-primary" href="/user/student/subscribed">Materials Subscripted</a>
             <section class="my-4">
 				<form th:action="@{/logout}" method="post">
 			          <input type="submit" value="Cerrar Sesion / Logout"/>
@@ -129,15 +130,11 @@
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="legajo">Nro Legajo</label>
                                             <input th:field="*{legajo}" type="text" class="form-control" required>
-                                        </div>
-                                        <div class="col-md-4 mb-5">
-                                            <label class="labels" for="typo">Indique Tipo Usuario:</label>
-                                            <input th:field="*{type}" type="text" class="form-control" id="type" placeholder="Admin / Student">
-                                        </div>                                        
+                                        </div>                                     
                                 </div>                                
 
                                 <!-- BUTTON REGISTER BLUE -->
-                                <input type="submit" id="btnRegistrateAdmin" value="Change Data Profile Admin" class="btn btn-success"/>                                 
+                                <input type="submit" id="" value="Change Data Profile Student" class="btn btn-success"/>                                 
                                 
                                 <a th:href="@{/user/student/profile}" type="button" class="btn btn-primary ml-5">Return Profile User</a>
 

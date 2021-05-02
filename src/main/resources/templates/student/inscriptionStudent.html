@@ -61,23 +61,9 @@
       <!--INIT Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
         <div class="container-fluid">
-          <div class="navbar-wrapper">
-
-            <div class="navbar-toggle d-inline my-3">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
+          <div class="navbar-wrapper my-3">
             <p class="navbar-brand">Profile Student</p>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          
+          </div>          
         </div>
       </nav>    
       <!--END Navbar -->
@@ -100,38 +86,13 @@
       <div class="content">
 
         <section class="col-12 offset-fixed">
-            <a class="btn btn-yellow" href="/student/listMaterialInscripted">Registered Subjects</a>
-            <a class="btn btn-yellow" href="/student/UnsubscribedMaterial">Unsubscribed</a>
-            <a class="btn btn-yellow" href="/student/listMaterialInscripted">List Material Subscribed</a>
-        </section>
-        
-        <section class="col-7 offset-fixed my-5">
-        
-        	<!--Inicio de Solicitud de su Profile -->
-            <div class="card card-plain">
-            	<form th:object="${takeid}" th:action="@{/student/inscription}" method="POST">
-            	
-          			<div class="form-group">
-          			    <label class="labels" for="text" >Ingrese su DNI</label>
-                        <input th:field="*{text}" type="text"
-                            class="form-control form-control-sm bg-light" 
-                            placeholder="Ingrese su DNI" required="">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="labels" for="nameMaterial" >Ingrese Nombre de la Materia a Inscribirse</label>
-                        <input th:field="*{nameMaterial}" type="text"
-                            class="form-control form-control-sm bg-light" 
-                            placeholder="Ingrese Nombre de la Materia a Inscribirse" required="">
-                    </div>
-                                            
-                    <!-- BUTTON REGISTER BLUE -->
-                    <input type="submit" id="" value="Send Inscription" class="btn btn-yellow"/>                                        	
-            	</form>
-            </div>
-            <!--Fin de Solicitud de su Profile -->            
-                      
-        </section>  
+        	<a class="btn btn-primary" href="/user/student/subscribed">Materials Subscripted</a>
+            <section class="my-4">
+				<form th:action="@{/logout}" method="post">
+			          <input type="submit" value="Cerrar Sesion / Logout"/>
+			    </form>	        
+			</section>
+        </section>    
         
         <section class="col-12 offset-fixed my-4">
         
@@ -148,20 +109,33 @@
                           
                           <table id="fresh-table" class="table">
                             <thead>
+                              <th>ID</th> 
                               <th>NAME</th>
                               <th>HOUR</th>
                               <th>CAPACITY</th>
                               <th>SUBSCRIBED</th>
                               <th>DETAIL</th>
-
+                              <th>UPDATE</th>
+                              <th>DELETE</th>
+                              <th>LIST PROFESSORS</th>
                             </thead>
                             <tbody>
                                 <tr data-th-each="material : ${materials}">
+                                	<td data-th-text="${material.id}"></td>
                                     <td data-th-text="${material.name}"></td>
                                     <td data-th-text="${material.hour}"></td>
                                     <td data-th-text="${material.capacity}"></td>
-                                    <td data-th-text="${material.subscribed}"></td>                                    
+                                    <td data-th-text="${material.subscribed}"></td>
                                     <td data-th-text="${material.detail}"></td>
+                                    
+                                    <td sec:authorize="hasRole('ROLE_USER')"><a th:href="@{'/user/student/addMaterial/' + ${material.id}}">
+                                    	<button class="btn btn-primary"><i class="far fa-edit"> ADD MATERIAL</i></button></a></td>
+            
+            						<td sec:authorize="hasRole('ROLE_USER')"><a th:href="@{'/user/student/deleteMaterial/' + ${material.id}}">
+            							<button class="btn btn-dark"><i class="far fa-trash-alt"> DELETE MATERIAL</i></button></a></td>
+            							
+            						<td sec:authorize="hasRole('ROLE_USER')"><a th:href="@{'/user/student/listStudents/' + ${material.id}}">
+            							<button class="btn btn-success"><i class="far fa-edit"> LIST STUDENTS</i></button></a></td>
                                 </tr>
                             </tbody>
                           </table>

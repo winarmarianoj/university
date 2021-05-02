@@ -54,7 +54,7 @@ public class PersonService implements Services<Person>{
 	public String update(Person entity) {
 		String message = "";
 		if(create(entity)) {
-			message = "La Persona fue modificada exitosamente en la BD!";
+			message = "Admin fue modificado exitosamente en la BD!";
 		}else {
 			message = "No se pudo modificar o los datos son incorrectos.";
 		}
@@ -76,18 +76,8 @@ public class PersonService implements Services<Person>{
 	}
 
 	@Override
-	public Person getByName(String name) {
-		return null;
-	}
-
-	@Override
 	public boolean existsById(Long id) {
 		return perRepo.existsById(id);
-	}
-
-	@Override
-	public boolean existsByObject(Person person) {
-		return false;
 	}
 	
 	/*
@@ -132,6 +122,22 @@ public class PersonService implements Services<Person>{
 			}
 		}
 		return res;
+	}
+
+	/**
+	 * Modificamos datos de la Persona
+	 * @param entity Objeto con los datos desde la web
+	 * @param us Cuenta de Usuario
+	 * @return Person modificado
+	 */
+	public String updatePerson(Register entity) {
+		Account acc = accServ.findByUser(entity.getDni());
+		Person per = findByPerson(acc);
+		per.setEmail(entity.getEmail());
+		per.setName(entity.getName());
+		per.setPhone(entity.getPhone());
+		per.setSurname(entity.getSurname());
+		return update(per);
 	}
 
 }

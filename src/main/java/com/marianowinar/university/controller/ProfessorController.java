@@ -84,7 +84,7 @@ public class ProfessorController implements Task<Professor>{
 	 * Add Material of Professor
 	 */
 	@Override
-	@GetMapping("/addMaterial/{id}") // TRAE EL ID DEL PROFESOR DE LA WEB
+	@GetMapping("/addMaterial/{id}") 
 	public String getIdAddMaterial(@PathVariable("id") Long id, Model model, ModelMap mp) {
 		model.addAttribute("addMaterial", new AddMaterial());
 		List<AddMaterial> addMatList = profServ.createAddMaterial(id);		
@@ -93,7 +93,7 @@ public class ProfessorController implements Task<Professor>{
 		return "/professor/professorAddMaterial";
 	}
 	
-	@GetMapping("/addMaterialNew/{id}") // TRAE EL ID DE LA MATERIA A AGREGAR
+	@GetMapping("/addMaterialNew/{id}") 
 	public String getIdAddMaterial(@PathVariable("id") Long id) {
 		this.message = profServ.addMaterial(this.idProf, id);
 		return "redirect:/admin/professor/response";

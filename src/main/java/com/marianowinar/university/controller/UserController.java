@@ -10,11 +10,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.marianowinar.university.controller.interfaces.Task;
+import com.marianowinar.university.service.application.MaterialService;
 import com.marianowinar.university.service.application.UserService;
+import com.marianowinar.university.service.entity.Material;
 import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.util.UserConnectedService;
@@ -28,6 +31,9 @@ public class UserController implements Task<Person>{
 	
 	@Autowired
 	UserConnectedService userConnected;
+	
+	@Autowired
+	MaterialService matServ;
 	
 	private String message;
 
@@ -53,52 +59,102 @@ public class UserController implements Task<Person>{
 
 	@Override
 	public String getRegister(Model model) {
+		// No se utiliza.
 		return null;
 	}
 
-	@Override
+	@Override	
+	public String getUpdate(Long id, Model model, ModelMap mp) {		
+        return null;
+	}
+	
 	@GetMapping("/update")
-	public String getUpdate(Long id, Model model, ModelMap mp) {
+	public String getUpdateStudent(Model model, ModelMap mp) {
 		Person person = userConnected.personConected();	
 		List<Person> list = new ArrayList<>();
 		list.add(person);
 		mp.put("persons", list);		
 		model.addAttribute("register", new Register());
-        return "/student/updateAdmin";
+        return "/student/updateStudent";
 	}
 
-	@Override
+	@Override	
 	public String getIdDelete(Long id, Model model, ModelMap mp) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+		
+	@GetMapping("/delete")
+	public String getDeleteStudent(Long id, Model model, ModelMap mp) {
+		return "/student/deletesUser";
+	}
+	
+	@GetMapping("/deleteConfirm")
+	public String getDeleteConfirm() {
+		String destiny = "";
+		Person person = userConnected.personConected();
+		if(userServ.delete(person.getId())) {
+			destiny = "redirect:/";
+		}else {
+			this.message = "El Perfil y Usuario no han podido ser eliminados";
+			destiny = "redirect:/user/student/response";
+		}		
+		return destiny;
+	}
+	
+	@GetMapping("/inscription")
+	public String getInscription(ModelMap mp) {
+		mp.put("materials", matServ.viewAll());
+        return "/student/inscriptionStudent";
 	}
 
 	@Override
-	public String getIdAddMaterial(Long id, Model model, ModelMap mp) {
-		// TODO Auto-generated method stub
-		return null;
+	@GetMapping("/addMaterial/{id}")   
+	public String getIdAddMaterial(@PathVariable("id") Long id, Model model, ModelMap mp) {
+		Person person = userConnected.personConected();	
+		this.message = userServ.addMaterial(person,id);
+		return "redirect:/user/student/response";
 	}
 
 	@Override
-	public String getIdDeleteMaterial(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	@GetMapping("/deleteMaterial/{id}")
+	public String getIdDeleteMaterial(@PathVariable("id") Long id) {
+		Person person = userConnected.personConected();
+		this.message = userServ.deleteMaterial(person,id);
+		return "redirect:/user/student/response";
 	}
 
 	@Override
-	public String getListProfMat(Long id, Model model, ModelMap mp) {
-		// TODO Auto-generated method stub
-		return null;
+	@GetMapping("/listStudents/{id}")
+	public String getListProfMat(@PathVariable("id") Long id, Model model, ModelMap mp) {
+		Material mat = matServ.searchingMaterial(id);
+		List<Person> list = userServ.listStudentForMaterial(id,mat);
+		List<Material> matList = new ArrayList<>();
+		matList.add(mat);
+		mp.put("students", list);
+		mp.put("materials", matList);
+		return "/student/listMaterialStudentInscripted";
+	}
+	
+	@GetMapping("/subscribed")
+	public String getListMaterialsSubscribed(Model model, ModelMap mp) {
+		Person person = userConnected.personConected();
+		List<Material> matList = person.getListMaterial();
+		List<Person> stuList = new ArrayList<>();
+		stuList.add(person);
+		mp.put("students", stuList);
+		mp.put("materials", matList);
+		return "/student/listMaterialsSubscribed";		
 	}
 
 	@Override
 	public String postRegister(Person entity, BindingResult result) {
-		// TODO Auto-generated method stub
+		// No se utiliza.
 		return null;
 	}
 
 	@Override
 	public String postChangeProfile(Person entity, BindingResult result) {
+		// No se utiliza.
 		return null;		
 	}
 	
@@ -110,7 +166,7 @@ public class UserController implements Task<Person>{
 			destiny= "redirect:/user/student/update";
 		}else{
 			this.message = userServ.updateStudent(entity);
-			destiny= "redirect:/admin/response";	
+			destiny= "redirect:/user/student/response";	
 		}		
 		return destiny;		
 	}

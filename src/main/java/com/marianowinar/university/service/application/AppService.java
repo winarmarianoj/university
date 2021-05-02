@@ -44,6 +44,11 @@ public class AppService {
 		return message;
 	}
 
+	/**
+	 * Cambio de Contraseña de un Usuario
+	 * @param entity tipo de objeto Forgot con los datos que vienen de la web
+	 * @return mensaje del resultado de la operación
+	 */
 	public String forgotNew(Forgot entity) {
 		String message = "Password incorrecto o no son iguales";
 		Account acc = accServ.takeUser(entity.getDni());

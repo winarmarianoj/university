@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.marianowinar.university.service.entity.Material;
 import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.source.Quota;
+import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.factory.FactoryEntities;
 
 @Service
@@ -21,6 +22,9 @@ public class AdminService {
 	
 	@Autowired
 	MaterialService matServ;
+	
+	@Autowired
+	AccountService accServ;
 	
 	private FactoryEntities factory;
 	
@@ -57,6 +61,12 @@ public class AdminService {
 			   }
 			});
 		return quotaList;
+	}
+
+	public String updateAdmin(Register entity) {
+		String message = accServ.updateAccount(entity);
+		message = message + perServ.updatePerson(entity);
+		return message;
 	}
 	
 }

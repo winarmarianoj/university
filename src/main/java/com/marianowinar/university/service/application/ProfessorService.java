@@ -54,19 +54,16 @@ public class ProfessorService implements Services<Professor>{
 	@Override
 	public String update(Professor entity) {
 		String message = "";
-		boolean res = false;
-		for(Professor ele : viewAll()) {
-			if(ele.getId() == entity.getId()) {
-				System.out.println("ID de Profesor " + " " + ele.getId());
-				System.out.println("ID de la Entity " + " " + entity.getId());
-				create(entity);
-				message = "El Profesor fue modificado exitosamente en la BD!";
-				res = true;
-				break;
-			}
-		}
+		Professor prof = searchingProfessor(entity.getId());
+		prof.setActive(entity.isActive());
+		prof.setEmail(entity.getEmail());
+		prof.setName(entity.getName());
+		prof.setPhone(entity.getPhone());
+		prof.setSurname(entity.getSurname());
 		
-		if(!res) {
+		if(create(prof)) {
+			message = "El Profesor fue modificado exitosamente en la BD!";
+		}else {
 			message = "No se pudo modificar o los datos son incorrectos.";
 		}
 		return message;
@@ -87,19 +84,9 @@ public class ProfessorService implements Services<Professor>{
 	}
 
 	@Override
-	public Professor getByName(String name) {
-		return null;
-	}
-
-	@Override
 	public boolean existsById(Long id) {
 		return profRepo.existsById(id);
-	}
-
-	@Override
-	public boolean existsByObject(Professor entity) {
-		return false;
-	}
+	}	
 
 	/**
 	 * Busca en la BD el objeto Professor con id
@@ -198,9 +185,7 @@ public class ProfessorService implements Services<Professor>{
 		prof.addMaterial(mat);
 		mat.addPerson(prof);
 		message = matServ.update(mat);
-		System.out.println("Mensaje update Material" + " " + message);
-		message = update(prof);
-		System.out.println("Mensaje update Professor" + " " + message);
+		message = message + update(prof);
 		return message;
 	}
 	
@@ -211,9 +196,14 @@ public class ProfessorService implements Services<Professor>{
 	 * @return mensaje del resultado
 	 */
 	public String deleteMaterial(Long idProf, Long idMat) {
+		String message = "";
 		Professor prof = searchingProfessor(idProf);
+		Material mat = matServ.searchingMaterial(idMat);
 		prof.getMaterials().remove(idMat);		
-		return update(prof);
+		mat.getListPerson().remove(idProf);
+		message = matServ.update(mat);
+		message = message + update(prof);
+		return message;
 	}
 
 }

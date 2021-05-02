@@ -94,16 +94,13 @@
 			</section>
         </section>    
         
-        <section class="col-12 offset-fixed my-4">
-        
-        	<div class="row">
-                    
+        <section class="col-12 offset-fixed my-4">        
+        	<div class="row">                    
                       <!-- INIT TABLE -->
                       <div class="col-md-12 col-md-offset-2">
                         <div class="description">
-                          <h2>LISTADO DE MATERIAS</h2>
-                        </div>
-                        
+                          <h2>INFORMACIÓN DE LA MATERIA SELECCIONADA</h2>
+                        </div>                        
                         <div class="fresh-table full-color-orange">
                         <!-- full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange-->
                           
@@ -115,9 +112,6 @@
                               <th>CAPACITY</th>
                               <th>SUBSCRIBED</th>
                               <th>DETAIL</th>
-                              <th>UPDATE</th>
-                              <th>DELETE</th>
-                              <th>LIST PROFESSORS</th>
                             </thead>
                             <tbody>
                                 <tr data-th-each="material : ${materials}">
@@ -127,15 +121,6 @@
                                     <td data-th-text="${material.capacity}"></td>
                                     <td data-th-text="${material.subscribed}"></td>
                                     <td data-th-text="${material.detail}"></td>
-                                    
-                                    <td sec:authorize="hasRole('ROLE_USER')"><a th:href="@{'/user/student/addMaterial/' + ${material.id}}">
-                                    	<button class="btn btn-primary"><i class="far fa-edit"> ADD MATERIAL</i></button></a></td>
-            
-            						<td sec:authorize="hasRole('ROLE_USER')"><a th:href="@{'/user/student/deleteMaterial/' + ${material.id}}">
-            							<button class="btn btn-dark"><i class="far fa-trash-alt"> DELETE MATERIAL</i></button></a></td>
-            							
-            						<td sec:authorize="hasRole('ROLE_USER')"><a th:href="@{'/user/student/listStudents/' + ${material.id}}">
-            							<button class="btn btn-success"><i class="far fa-edit"> LIST STUDENTS</i></button></a></td>
                                 </tr>
                             </tbody>
                           </table>
@@ -143,8 +128,44 @@
                       </div>
                       <!--END FORM OR TABLE -->
                   </div>
+        </section>
         
-        </section>   
+        <section class="col-12 offset-fixed my-4">        
+        	<div class="row">                    
+                      <!-- INIT TABLE -->
+                      <div class="col-md-12 col-md-offset-2">
+                        <div class="description">
+                          <h2>LISTADO DE ESTUDIANTES PARA ESTA MATERIA</h2>
+                        </div>
+                        
+                        <div class="fresh-table full-color-green">
+                        <!-- full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange-->
+                          
+                          <table id="fresh-table" class="table">
+                            <thead>
+                              <th>ID</th>
+                              <th>NAME</th>
+                              <th>SURNAME</th>
+                              <th>PHONE</th>
+                              <th>EMAIL</th>
+                              <th>TYPE</th>
+                            </thead>
+                            <tbody>
+                                <tr data-th-each="person : ${students}">
+                                    <td data-th-text="${person.id}"></td>
+                                    <td data-th-text="${person.name}"></td>
+                                    <td data-th-text="${person.surname}"></td>
+                                    <td data-th-text="${person.phone}"></td>
+                                    <td data-th-text="${person.email}"></td>
+                                    <td data-th-text="${person.type}"></td>		    
+                                </tr>
+                            </tbody>
+                          </table>
+                        </div>                    
+                      </div>
+                      <!--END FORM OR TABLE -->
+                  </div>   
+        </section>
 
       </div>
       <!-- END CENTRAL BODY -->

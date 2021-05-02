@@ -95,93 +95,34 @@
 			    </form>	        
 			</section>
         </section>
-        
+
         <!-- INIT WRAPPER -->
           <div class="wrapper my-5">
 
               <div class="container">
                 <div class="row">                  
 
-                  <section class="columna2 col-10 offset-fixed f-right">
-                      <!--INIT FORM ACCOUNT-->
-                            <form th:object="${register}" th:action="@{/user/student/update}" method="POST"  class="needs-validation" novalidate>
-                                <div class="row">
-                                        
-                                        <div class="col-md-4 mb-5">
-                                            <label class="labels" for="name" >Nombre</label>
-                                            <input th:field="*{name}" type="text" class="form-control" required>                                            
-                                        </div>
-                                        <div class="col-md-4 mb-5">
-                                            <label class="labels" for="surname">Apellido</label>
-                                            <input th:field="*{surname}" type="text" class="form-control" required>                                            
-                                        </div>                                        
-                                        <div class="col-md-4 mb-5">
-                                            <label class="labels" for="phone">Teléfono</label>
-                                            <input th:field="*{phone}" type="text" class="form-control" required>
-                                        </div>
-                                        <div class="col-md-4 mb-5">
-                                            <label class="labels" for="email">Email</label>
-                                            <input th:field="*{email}" type="email" class="form-control" required>
-                                        </div>
-                                        <div class="col-md-4 mb-5">
-                                            <label class="labels" for="dni">D.N.I.</label>
-                                            <input th:field="*{dni}" type="text" class="form-control" required>
-                                        </div>
-                                        <div class="col-md-4 mb-5">
-                                            <label class="labels" for="legajo">Nro Legajo</label>
-                                            <input th:field="*{legajo}" type="text" class="form-control" required>
-                                        </div>                                     
-                                </div>                                
-
-                                <!-- BUTTON REGISTER BLUE -->
-                                <input type="submit" id="" value="Change Data Profile Student" class="btn btn-success"/>                                 
-                                
-                                <a th:href="@{/user/student/profile}" type="button" class="btn btn-primary ml-5">Return Profile User</a>
-
-                            </form>
-                            <!--END FORM ACCOUNT-->      
-                  </section>
-                  
-                  <section class="col-12 offset-fixed my-4">
+                 	<section class="col-12 offset-fixed my-4">
         
-		        		  <div class="row">
-		                    
-		                      <!-- INIT TABLE -->
-		                      <div class="col-md-12 col-md-offset-2">
-		                        <div class="description">
-		                          <h2>PROFILE STUDENT</h2>
-		                        </div>
-		                        
-		                        <div class="fresh-table full-color-blue">
-		                        <!-- full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange-->
-		                          
-		                          <table id="fresh-table" class="table">
-		                            <thead>
-		                              <th>NAME</th>
-		                              <th>SURNAME</th>
-		                              <th>PHONE</th>
-		                              <th>EMAIL</th>
-		                              <th>TYPE</th>
-		                              <th>DNI</th>
-		                              <th>LEGAJO</th>		
-		                            </thead>
-		                            <tbody>
-		                                <tr data-th-each="person : ${persons}">
-		                                    <td data-th-text="${person.name}"></td>
-		                                    <td data-th-text="${person.surname}"></td>
-		                                    <td data-th-text="${person.phone}"></td>
-		                                    <td data-th-text="${person.email}"></td>
-		                                    <td data-th-text="${person.type}"></td>
-		                                    <td data-th-text="${person.account.username}"></td>
-		                                    <td data-th-text="${person.account.legajo}"></td>     
-		                                </tr>
-		                            </tbody>
-		                          </table>
-		                        </div>                    
-		                      </div>
-		                      <!--END FORM OR TABLE -->
-		                  </div>
-		          </section> 
+			        	<div class="row">
+			                    
+			                      <!-- INIT TABLE -->
+			                      <div class="col-md-12 col-md-offset-2">
+			                        <div class="description">
+			                          <h1>¿Está Seguro que quiere Eliminar su Usuario y Perfil de Estudiante?</h1>
+			                        </div>
+			                        
+			                        <div class="fresh-table full-color-red">
+			                        <!-- full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange-->
+			                          	<a class="btn btn-green" href="/user/student/deleteConfirm">ACCEPT</a>
+            							<a class="btn btn-red" href="/user/student/profile">CANCEL</a>			                          
+			                        </div>                    
+			                      </div>
+			                      <!--END FORM OR TABLE -->
+			                  </div>   
+			        
+			        </section>   
+ 
                 </div>      
               </div>
               <!--END CONTAINER -->

@@ -80,7 +80,6 @@ public class AdminController implements Controllers<Person>{
 	@Override
 	@GetMapping("/delete")
 	public String getDelete(Model model){
-		//model.addAttribute("takeid", new Takeid());
         return "/admins/deletesAdmin";
     }
 	
@@ -90,10 +89,10 @@ public class AdminController implements Controllers<Person>{
 		String destiny = "";
 		Person person = userConnected.personConected();
 		if(perServ.delete(person.getId())) {
-			destiny = "index";
+			destiny = "redirect:/";
 		}else {
 			this.message = "El Perfil y Usuario no han podido ser eliminados";
-			destiny = "/admin/response";
+			destiny = "redirect:/admin/response";
 		}		
 		return destiny;
 	}
@@ -119,7 +118,7 @@ public class AdminController implements Controllers<Person>{
 		if(result.hasErrors()) {
 			destiny= "redirect:/admin/update";
 		}else{
-			this.message = appServ.registered(entity);
+			this.message = admServ.updateAdmin(entity);
 			destiny= "redirect:/admin/response";	
 		}		
 		return destiny;

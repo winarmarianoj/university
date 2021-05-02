@@ -83,17 +83,7 @@ public class AccountService implements Services<Account>{
 	}
 	
 	@Override
-	public Account getByName(String username){
-        return accRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No existe usuario"));
-    }
-	
-	@Override
 	public boolean existsById(Long dni){
-        return false;
-    }
-
-	@Override
-    public boolean existsByObject(Account account){
         return false;
     }
 	
@@ -168,6 +158,20 @@ public class AccountService implements Services<Account>{
 		account.setPassword(encodedPassword);
 		
 		return account;
+	}
+
+	/**
+	 * Modifica la cuenta de Usuario
+	 * @param entity Datos que vienen de la web
+	 * @return mensaje con el resultado
+	 */
+	public String updateAccount(Register entity) {
+		Account acc = findByUser(entity.getDni());
+		acc.setEnabled(true);
+		acc.setLegajo(entity.getLegajo());
+		String encodedPassword = bCryptPasswordEncoder.encode(entity.getLegajo());		
+		acc.setPassword(encodedPassword);		
+		return update(acc);
 	}
 
 }

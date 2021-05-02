@@ -71,20 +71,10 @@ public class MaterialService implements Services<Material>{
 	public List<Material> viewAll() {
 		return matRepo.findAll();
 	}
-
-	@Override
-	public Material getByName(String name) {
-		return matRepo.findByName(name);
-	}
-
+	
 	@Override
 	public boolean existsById(Long id) {		
 		return matRepo.existsById(id);
-	}
-
-	@Override
-	public boolean existsByObject(Material entity) {
-		return false;
 	}
 
 	/**
@@ -132,6 +122,15 @@ public class MaterialService implements Services<Material>{
 			message = "No se ha podido eliminar la Materia. Intente nuevamente.";
 		}
 		return message;
+	}
+	
+	/**
+	 * Busca la Materia por su nombre en la BD
+	 * @param name de la materia desde la web
+	 * @return el objeto Material
+	 */
+	public Material getByName(String name) {
+		return matRepo.findByName(name);
 	}
 
 }

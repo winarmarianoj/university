@@ -50,7 +50,6 @@ public class RoleService implements Services<Role>{
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -60,24 +59,28 @@ public class RoleService implements Services<Role>{
 	}
 
 	@Override
-	public Role getByName(String roleName) {
-		return null;
-	}
-
-	@Override
 	public boolean existsById(Long id) {
 		return roleRepo.existsById(id);
-	}
-
-	@Override
-	public boolean existsByObject(Role role) {
-		return roleRepo.existsByRole(role);
-	}
+	}	
 	
 	/*
 	 * METHODS AND FUNCTION
 	 */
-		
+	
+	/**
+	 * Busca si existe o no el objeto en BD
+	 * @param role Objeto tipo Role 
+	 * @return true o false
+	 */
+	public boolean existsByObject(Role role) {
+		return roleRepo.existsByRole(role);
+	}
+	
+	/**
+	 * Busca un objeto por su nombre en la BD
+	 * @param roleAdmin Objeto tipo RoleName enum
+	 * @return el objeto RoleName
+	 */
 	public Optional<Role> getByRoleName(RoleName roleAdmin) {
 		return roleRepo.findByRole(roleAdmin);
 	}	

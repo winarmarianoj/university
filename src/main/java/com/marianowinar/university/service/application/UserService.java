@@ -1,5 +1,6 @@
 package com.marianowinar.university.service.application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.marianowinar.university.repository.UserRepository;
 import com.marianowinar.university.service.entity.Account;
+import com.marianowinar.university.service.entity.Material;
 import com.marianowinar.university.service.entity.Person;
+import com.marianowinar.university.service.entity.Professor;
 import com.marianowinar.university.service.entity.source.Register;
+import com.marianowinar.university.service.exception.person.PersonException;
 import com.marianowinar.university.service.factory.FactoryEntities;
 import com.marianowinar.university.service.interfaces.Services;
 import com.marianowinar.university.service.logger.Errors;
@@ -19,6 +23,15 @@ public class UserService implements Services<Person>{
 	
 	@Autowired
 	UserRepository userRepo;
+	
+	@Autowired
+	PersonService perServ;
+	
+	@Autowired
+	AccountService accServ;
+	
+	@Autowired
+	MaterialService matServ;
 	
 	private ValidPerson valPer;
 	private Errors errors;
@@ -32,79 +45,117 @@ public class UserService implements Services<Person>{
 
 	@Override
 	public boolean create(Person entity) {
-		// TODO Auto-generated method stub
+		boolean res = false;
+		
+		try {
+			valPer.validPerson(entity);
+			userRepo.save(entity);
+			res = true;
+		}catch(PersonException e) {
+			errors.logError(e.getError());
+		}
 		return false;
 	}
 
 	@Override
 	public String update(Person entity) {
-		// TODO Auto-generated method stub
-		return null;
+		String message = "";
+		if(create(entity)) {
+			message = "Student fue modificado exitosamente en la BD!";
+		}else {
+			message = "No se pudo modificar o los datos son incorrectos.";
+		}
+		return message;
 	}
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		userRepo.deleteById(id);
+		if(existsById(id)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public List<Person> viewAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Person getByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepo.findAll();
 	}
 
 	@Override
 	public boolean existsById(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		return userRepo.existsById(id);
 	}
+	
+	/*
+	 * METHODS AND FUNCTION
+	 */	
 
-	@Override
-	public boolean existsByObject(Person entity) {
-		// TODO Auto-generated method stub
-		return false;
+	/**
+	 * Cambios en la Cuenta y Perfil del User(Student)
+	 * @param entity Objeto Register con los datos de Account, Role y Person
+	 * @return el Mensaje para mostrar por pantalla del resultado
+	 */
+	public String updateStudent(Register entity) {
+		String message = accServ.updateAccount(entity);
+		message = message + " " + perServ.updatePerson(entity);
+		return message;
+	}
+	
+	// TODO REVISAR CANTIDAD DE INSCRIPTOS SI HAY CUPO Y SI NO ESTA INSCRIPTO YA EL STU X MAT Y HORARIO
+	// TODO SUMAR SUSCRIPTO
+	// TODO RESTAR CUANDO SE DA DE BAJA
+	// TODO NO SUPERE CANT MAX DE PARTICIPANTES....SINO NO HAY CUPO
+
+	/**
+	 * Función que Agrega una Materia a un Student
+	 * @param stu Estudiante usuario conectado
+	 * @param id del objeto Materia
+	 * @return mensaje del resultado
+	 */
+	public String addMaterial(Person stu, Long id) {
+		String message = "";
+		Material mat = matServ.searchingMaterial(id);
+		
+		
+		
+		stu.addMaterial(mat);
+		mat.addPerson(stu);
+		message = matServ.update(mat);
+		message = message + " " + update(stu);
+		return message;
 	}
 
 	/**
-	 * Registramos Account y Person nuevos
-	 * @param entity Objeto Register con los datos del nuevo Account, Role y Person
-	 * @return el Mensaje para mostrar por pantalla del resultado
+	 * Función que Elimina una Materia a un Student
+	 * @param stu Estudiante usuario conectado
+	 * @param id del objeto Materia
+	 * @return mensaje del resultado
 	 */
-	public String registered(Register entity) {
+	public String deleteMaterial(Person stu, Long id) {
 		String message = "";
-		Person person = perServ.createAdmin(entity); 
-		Account us = accServ.createUser(entity); 		
-		
-		if(us != null) {
-			person.setAccount(us);
-			perServ.update(person);
-			message = "La Cuenta se ha creado satisfactoriamente. Puede loguearse!!! Bienvenido al Sitio";
-		}else {
-			message = "Ha cargado datos erróneos, vuelva a intentarlo.";
-		}
+		Material mat = matServ.searchingMaterial(id);
+		stu.getMaterials().remove(id);		
+		mat.getListPerson().remove(stu.getId());
+		message = matServ.update(mat);
+		message = message + " " + update(stu);
 		return message;
 	}
 
-	public String updateStudent(Register entity) {
-		String message = "";
-		Person person = perServ.createAdmin(entity); 
-		Account us = accServ.createUser(entity); 		
-		
-		if(us != null) {
-			person.setAccount(us);
-			perServ.update(person);
-			message = "La Cuenta se ha creado satisfactoriamente. Puede loguearse!!! Bienvenido al Sitio";
-		}else {
-			message = "Ha cargado datos erróneos, vuelva a intentarlo.";
+	/**
+	 * Función que genera la Lista de Estudiantes por una
+	 * materia en especial enviada por el id de la web
+	 * @param id del objeto Material
+	 * @return Lista de Estudiantes o Person
+	 */
+	public List<Person> listStudentForMaterial(Long id, Material mat) {
+		List<Person> stuList = new ArrayList<>();
+		for(Person ele : mat.getListPerson()) {
+			if(ele.getType().equals("Student")) {
+				stuList.add(ele);
+			}
 		}
-		return message;
+		return stuList;
 	}
 
 }
