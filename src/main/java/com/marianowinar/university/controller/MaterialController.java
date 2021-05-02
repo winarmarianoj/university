@@ -71,24 +71,14 @@ public class MaterialController implements Task<Material>{
 		String destiny = "redirect:/admin/material/responseMaterial"; 
 		return destiny;
 	}
-		
-	
-	@GetMapping("/takeNameListMaterialProfessor")
-	public String getIdNameListProfMat(Model model, ModelMap mp) {
-		model.addAttribute("material", new Material());
-		mp.put("materials", matServ.viewAll());
-		return "/material/takeNameListMaterialProfessor";
-	}
 	
 	@Override
 	public String getIdAddMaterial(Long id, Model model, ModelMap mp) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getIdDeleteMaterial(Model model, ModelMap mp) {
-		// TODO Auto-generated method stub
+	public String getIdDeleteMaterial(@PathVariable("id") Long id) {
 		return null;
 	}
 	
@@ -134,9 +124,5 @@ public class MaterialController implements Task<Material>{
 	    	destiny = "redirect:/admin/material/responseMaterial";
 	    }
 	    return destiny;
-	}
-
-
-
-		
+	}		
 }

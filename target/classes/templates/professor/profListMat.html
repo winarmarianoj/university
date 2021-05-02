@@ -11,15 +11,15 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <!-- Nucleo Icons -->
-  <link href="../../css/nucleo.css" rel="stylesheet" />
+  <link href="../../../../css/nucleo.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="../../css/blackStyles.css?v=1.0.0" rel="stylesheet" />
-  <link href="../../css/profileAdmin.css" rel="stylesheet" />
+  <link href="../../../../css/blackStyles.css?v=1.0.0" rel="stylesheet" />
+  <link href="../../../../css/profileAdmin.css" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../../css/demo.css" rel="stylesheet" />
+  <link href="../../../../css/demo.css" rel="stylesheet" />
 
   <!-- LINKS A TABLE CSS -->
-  <link href="../../css/fresh-bootstrap-table.css" rel="stylesheet" />
+  <link href="../../../../css/fresh-bootstrap-table.css" rel="stylesheet" />
   
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -36,35 +36,35 @@
     <div class="sidebar">
       <div class="sidebar-wrapper">
         <div class="logo">
-          <img src="../../logos/logo.png" width="130" height="150">
+          <img src="../../../logos/logo.png" width="130" height="150">
         </div>
         <ul class="nav">
           <li >
-            <a href="/admins/profileAdmin">
+            <a href="/admin/profile">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Profile</p>
             </a>
           </li>
           <li class="active">
-            <a href="/professor/professorControlPanel">            
+            <a href="/admin/professor/controlPanel">            
               <i class="tim-icons icon-atom"></i>
               <p>Professor</p>
             </a>
           </li>
           <li >
-            <a href="/material/materialControlPanel">
+            <a href="/admin/material/controlPanel">
               <i class="tim-icons icon-pin"></i>
               <p>Material</p>
             </a>
           </li>
           <li>
-            <a href="/admins/share">
+            <a href="/admin/quotas">
               <i class="tim-icons icon-bell-55"></i>
-              <p>Inscription</p>
+              <p>Quotas</p>
             </a>
           </li>
           <li>
-            <a href="/admins/ListStudent">
+            <a href="/admin/ListStudent">
               <i class="tim-icons icon-single-02"></i>
               <p>Students</p>
             </a>
@@ -80,23 +80,9 @@
       <!--INIT Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
         <div class="container-fluid">
-          <div class="navbar-wrapper">
-
-            <div class="navbar-toggle d-inline my-3">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <p class="navbar-brand">Material Control Panel</p>
+          <div class="navbar-wrapper my-3">
+            <p class="navbar-brand ">Profile Admin</p>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          
         </div>
       </nav>    
       <!--END Navbar -->
@@ -117,15 +103,15 @@
 
       <!-- INIT CENTRAL BODY -->
       <div class="content">
-
+        
         <section class="col-12 offset-fixed">
-            <a class="btn btn-yellow" href="/professor/createProfessor">Create Professor</a>
-            <a class="btn btn-yellow" href="/professor/takeIdChangeProfessor">Update Professor</a>
-            <a class="btn btn-yellow" href="/professor/takeIdDeleteProfessor">Delete Professor</a>
-            <a class="btn btn-yellow" href="/professor/takeIdAddMaterialProfessor">Add Material</a>
-            <a class="btn btn-yellow" href="/professor/takeIdDeleteMaterialProfessor">Delete Material</a>
-            <a class="btn btn-yellow" href="/professor/takeIdProfessorListMat">Id Professor Material List</a>
-        </section>        
+            <a class="btn btn-yellow" href="/admin/professor/createProfessor">Create Professor</a>  
+            <section class="my-4">
+				<form th:action="@{/logout}" method="post">
+			          <input type="submit" value="Cerrar Sesion / Logout"/>
+			    </form>	        
+			</section>
+        </section>       
         
         <section class="col-12 offset-fixed my-4">
         
@@ -134,7 +120,7 @@
                       <!-- INIT TABLE -->
                       <div class="col-md-12 col-md-offset-2">
                         <div class="description">
-                          <h2>LISTADO DE MATERIAS</h2>
+                          <h2>LISTADO DE MATERIAS DEL PROFESOR SOLICITADO</h2>
                         </div>
                         
                         <div class="fresh-table full-color-red">
@@ -142,6 +128,7 @@
                           
                           <table id="fresh-table" class="table">
                             <thead>
+                              <th>ID</th>
                               <th>NAME</th>
                               <th>HOUR</th>
                               <th>CAPACITY</th>
@@ -150,7 +137,8 @@
 
                             </thead>
                             <tbody>
-                                <tr data-th-each="material : ${materialss}">
+                                <tr data-th-each="material : ${materials}">
+                                    <td data-th-text="${material.materialId}"></td>
                                     <td data-th-text="${material.name}"></td>
                                     <td data-th-text="${material.hour}"></td>
                                     <td data-th-text="${material.capacity}"></td>
@@ -188,11 +176,10 @@
                               <th>EMAIL</th>
                               <th>TYPE</th>
                               <th>ACTIVE</th>
-
                             </thead>
                             <tbody>
-                                <tr data-th-each="professor : ${professorss}">
-                                    <td data-th-text="${professor.personId}"></td>
+                                <tr data-th-each="professor : ${professors}">
+                                    <td data-th-text="${professor.id}"></td>
                                     <td data-th-text="${professor.name}"></td>
                                     <td data-th-text="${professor.surname}"></td>
                                     <td data-th-text="${professor.phone}"></td>

@@ -184,15 +184,13 @@ public class ProfessorService implements Services<Professor>{
 		
 		return addMatList;
 	}
-
-	@SuppressWarnings("unlikely-arg-type")
-	public String deleteMaterial(Long id, Long ids) {
-		Professor prof = searchingProfessor(id);
-		prof.getMaterials().remove(ids);
-		
-		return update(prof);
-	}
-
+	
+	/**
+	 * Función que Agrega una Materia a un Profesor
+	 * @param idProfesor del objeto Profesor
+	 * @param id del objeto Materia
+	 * @return mensaje del resultado
+	 */
 	public String addMaterial(Long idProfesor, Long id) {
 		String message = "";
 		Professor prof = searchingProfessor(idProfesor);
@@ -204,6 +202,18 @@ public class ProfessorService implements Services<Professor>{
 		message = update(prof);
 		System.out.println("Mensaje update Professor" + " " + message);
 		return message;
+	}
+	
+	/**
+	 * Funcion que Elimina una Materia de un Profesor
+	 * @param idProf del objeto Profesor
+	 * @param idMat del objeto Materia
+	 * @return mensaje del resultado
+	 */
+	public String deleteMaterial(Long idProf, Long idMat) {
+		Professor prof = searchingProfessor(idProf);
+		prof.getMaterials().remove(idMat);		
+		return update(prof);
 	}
 
 }

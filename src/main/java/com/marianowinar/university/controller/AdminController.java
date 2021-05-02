@@ -30,14 +30,7 @@ import com.marianowinar.university.service.util.UserConnectedService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController implements Controllers<Person>{
-	
-	/*
-	 * 	@GetMapping("/prueba")
-	public String prueba() {
-		return "/admins/prueba";
-	}
-	 */
-	
+		
 	@Autowired
 	AdminService admServ;
 	

@@ -106,7 +106,6 @@
 
         <section class="col-12 offset-fixed">
             <a class="btn btn-yellow" href="/admin/material/createMaterial">Create Material</a>
-            <a class="btn btn-yellow" href="/admin/material/takeNameListMaterialProfessor">Listar Profesores por Materia</a>
             <section class="my-4">
 				<form th:action="@{/logout}" method="post">
 			          <input type="submit" value="Cerrar Sesion / Logout"/>
@@ -137,6 +136,7 @@
                               <th>DETAIL</th>
                               <th>UPDATE</th>
                               <th>DELETE</th>
+                              <th>LIST PROFESSORS</th>
                             </thead>
                             <tbody>
                                 <tr data-th-each="material : ${materials}">
@@ -152,6 +152,9 @@
             
             						<td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{'/admin/material/delete/' + ${material.id}}">
             							<button class="btn btn-dark"><i class="far fa-trash-alt"> DELETE</i></button></a></td>
+            							
+            						<td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{'/admin/material/matListProf/' + ${material.id}}">
+            							<button class="btn btn-success"><i class="far fa-trash-alt"> LIST PROFESSORS</i></button></a></td>
                                 </tr>
                             </tbody>
                           </table>

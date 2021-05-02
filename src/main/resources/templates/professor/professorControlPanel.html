@@ -159,7 +159,7 @@
             						<td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{'/admin/professor/addMaterial/' + ${professor.id}}">
             							<button class="btn btn-success"><i class="far fa-edit"></i>ADD OR DELETE MATERIAL</button></a></td>
             							
-            						<td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{'/admin/professor//' + ${professor.id}}">
+            						<td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{'/admin/professor/listMaterials/' + ${professor.id}}">
             							<button class="btn btn-primary"><i class="far fa-edit"></i>LIST MATERIALS</button></a></td>			    
                                 </tr>
                             </tbody>

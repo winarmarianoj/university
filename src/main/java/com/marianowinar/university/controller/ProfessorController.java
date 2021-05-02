@@ -76,8 +76,8 @@ public class ProfessorController implements Task<Professor>{
 	@Override
 	@GetMapping("/delete/{id}")
 	public String getIdDelete(@PathVariable("id") Long id, Model model, ModelMap mp) {
-		this.message = profServ.deleteProfessor(id);		 
-		return "/response";
+		this.message = profServ.deleteProfessor(id);
+		return "redirect:/admin/professor/response";
 	}
 		
 	/*
@@ -96,30 +96,33 @@ public class ProfessorController implements Task<Professor>{
 	@GetMapping("/addMaterialNew/{id}") // TRAE EL ID DE LA MATERIA A AGREGAR
 	public String getIdAddMaterial(@PathVariable("id") Long id) {
 		this.message = profServ.addMaterial(this.idProf, id);
-		return "/response";
+		return "redirect:/admin/professor/response";
 	}
 	
 	/*
 	 * Delete Material of Professor
 	 */
 	@Override
-	public String getIdDeleteMaterial(Model model, ModelMap mp) {
-		// TODO Auto-generated method stub
-		return null;
+	@GetMapping("/deleteMaterial/{id}")
+	public String getIdDeleteMaterial(@PathVariable("id") Long id) {
+		this.message = profServ.deleteMaterial(this.idProf, id);
+		return "redirect:/admin/professor/response";
 	}
 	
 	/*
 	 * List Material of Professor
 	 */
 	@Override
-	public String getListProfMat(Long id, Model model, ModelMap mp) {
-		// TODO Auto-generated method stub
-		return null;
+	@GetMapping("/listMaterials/{id}")
+	public String getListProfMat(@PathVariable("id") Long id, Model model, ModelMap mp) {
+		model.addAttribute("professor", new Professor());
+		Professor prof = profServ.searchingProfessor(id);
+		List<Professor> profList = new ArrayList<>();		
+		profList.add(prof);
+		mp.put("professors", profList);
+		mp.put("materials", prof.getListMaterial());
+		return "/professor/profListMat";
 	}
-	
-	
-	
-	
 
 	/*
 	 * CREATE PROFESSOR
@@ -152,11 +155,5 @@ public class ProfessorController implements Task<Professor>{
 	    }
 	    return destiny;
 	}	
-	
-	
-	
-
-	
-	
 
 }
