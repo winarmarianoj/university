@@ -1,5 +1,6 @@
 package com.marianowinar.university.service.application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.marianowinar.university.repository.MaterialRepository;
 import com.marianowinar.university.service.entity.Material;
+import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.exception.material.MaterialException;
 import com.marianowinar.university.service.interfaces.Services;
 import com.marianowinar.university.service.logger.Errors;
@@ -131,6 +133,36 @@ public class MaterialService implements Services<Material>{
 	 */
 	public Material getByName(String name) {
 		return matRepo.findByName(name);
+	}
+
+	/**
+	 * Función que crea una lista de profesores por la materia seleccionada
+	 * @param material objeto Material seleccionado
+	 * @return lista de profesores asignados
+	 */
+	public List<Person> createListProf(Material material) {
+		List<Person> profList = new ArrayList<>();
+		for(Person ele : material.getListPerson()) {
+			if(ele.getType().equals("Professor")) {
+				profList.add(ele);
+			}
+		}
+		return profList;
+	}
+
+	/**
+	 * Función que crea una lista de estudiantes por la materia seleccionada
+	 * @param material objeto Material seleccionado
+	 * @return lista de estudiantes inscriptos
+	 */
+	public List<Person> createListStudent(Material material) {
+		List<Person> stuList = new ArrayList<>();
+		for(Person ele : material.getListPerson()) {
+			if(ele.getType().equals("Student")) {
+				stuList.add(ele);
+			}
+		}
+		return stuList;
 	}
 
 }

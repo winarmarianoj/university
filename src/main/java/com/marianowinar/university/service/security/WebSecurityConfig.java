@@ -27,13 +27,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+        	.csrf().disable()
             .authorizeRequests()
 	        .antMatchers(resources).permitAll()  
 	        .antMatchers("/","/index","/registers","/forgot","/registrate","/resultRegistered").permitAll()
-	        .antMatchers("/admin*").hasAnyRole("ROLE_ADMIN")
-	        .antMatchers("/user*").hasAnyRole("ROLE_USER")
-                .anyRequest().authenticated()
-                .and()
+	        .antMatchers("/admin/*").access("hasRole('ADMIN') or hasRole('ROLE_ADMIN')")
+	        .antMatchers("/user/*").access("hasRole('USER') or hasRole('ROLE_USER')")
+	        	.and()
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -58,3 +58,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     	auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());     
     }
 }
+
+/*
+ * .antMatchers("/admin/deletesAdmin", "/admin/ListOrderStudent", "/admin/profileAdmin", "/admin/quotaMaterial",
+	        		"/admin/responseAdmin", "/admin/updateAdmin", 
+	        		"/material/materialControlPanel", "/material/matListProf", "/material/registerMaterial", "/material/respMaterial",
+	        		"/material/updateMaterial",
+	        		"/professor/professorAddMaterial", "/professor/professorControlPanel", "/professor/profListMat",
+	        		"/professor/registerProfessor", "/professor/respProfessor", "/professor/updateProfessor").access("hasRole('ADMIN') or hasRole('ROLE_ADMIN')")
+	        .antMatchers("/user/student/deletesUser", "/user/student/inscriptionStudent", "/user/student/listMaterialsSubscribed",
+	        		"/user/student/listMaterialStudentinscripted", "/user/student/profileStudent", "/user/student/responseStudent",
+	        		"/user/student/updateStudent").access("hasRole('USER') or hasRole('ROLE_USER')")
+ * 
+ * 
+ * 
+ */
+

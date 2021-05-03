@@ -28,7 +28,6 @@
 </head>
 
 <body class="">
-	<spam th:if="${session.per != null && per.type.equals(ADMIN)}">Bienvenido/a Administrador<spam class="font-italic" th:text="${session.per.name + session.per.surname"></spam></spam>
 
   <div class="wrapper">
 
@@ -147,7 +146,6 @@
             							
             						<td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{'/admin/professor/deleteMaterial/' + ${addMaterial.materialId}}">
             							<button class="btn btn-danger"><i class="far fa-trash-alt"></i> DELETE MATERIAL</button></a></td>
-            									    
                                 </tr>
                             </tbody>
                           </table>

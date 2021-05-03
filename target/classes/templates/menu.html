@@ -55,7 +55,8 @@
 			        </section> 
 			        
 			        <section class="my-5">
-						<h3><a th:href="@{/admin/profile}"> GO   ADMIN</a>  |  <a th:href="@{/user/student/profile}">GO   USER</a></h3>	        
+						<h3><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/profile}">GO ADMIN</a></h3> 
+						<h3 class="my-3"><a sec:authorize="hasRole('ROLE_USER')" th:href="@{/user/student/profile}">GO USER</a></h3>
 			        </section>
 			        
 			        <section class="my-4">

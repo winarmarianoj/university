@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.marianowinar.university.controller.interfaces.Task;
 import com.marianowinar.university.service.application.MaterialService;
 import com.marianowinar.university.service.entity.Material;
+import com.marianowinar.university.service.entity.Person;
 
 @Controller
 @RequestMapping(value = "/admin/material")
@@ -86,11 +87,23 @@ public class MaterialController implements Task<Material>{
 	@GetMapping("/matListProf/{id}")
 	public String getListProfMat(@PathVariable("id") Long id, Model model, ModelMap mp) {
 		Material material = matServ.searchingMaterial(id);
-		mp.put("persons", material.getListPerson());
+		List<Person> professorsList = matServ.createListProf(material);
+		mp.put("persons", professorsList);
 		List<Material> list = new ArrayList<>();
 		list.add(material);		
 		mp.put("materials", list);		
 		return "/material/matListProf";
+	}
+	
+	@GetMapping("/matListStudent/{id}")
+	public String getListStudentMat(@PathVariable("id") Long id, Model model, ModelMap mp) {
+		Material material = matServ.searchingMaterial(id);
+		List<Person> studentList = matServ.createListStudent(material);
+		mp.put("persons", studentList);
+		List<Material> list = new ArrayList<>();
+		list.add(material);		
+		mp.put("materials", list);		
+		return "/material/matListStudent";
 	}
 
 	/**
