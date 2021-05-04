@@ -5,6 +5,7 @@ import com.marianowinar.university.service.entity.Person;
 import com.marianowinar.university.service.entity.Professor;
 import com.marianowinar.university.service.entity.source.Quota;
 import com.marianowinar.university.service.entity.source.Register;
+import com.marianowinar.university.service.enums.RoleName;
 
 public class FactoryEntities {
 	
@@ -24,7 +25,13 @@ public class FactoryEntities {
 		per.setSurname(entity.getSurname());
 		per.setPhone(entity.getPhone());
 		per.setEmail(entity.getEmail());
-		per.setType(entity.getType());
+		
+		if(entity.getType().equals(String.valueOf(RoleName.ROLE_ADMIN))) {
+			per.setType("Admin");
+		}else {
+			per.setType("Student");
+		}
+		
 		return per;
 	}
 

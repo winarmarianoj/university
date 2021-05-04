@@ -83,6 +83,16 @@ public class RoleService implements Services<Role>{
 	 */
 	public Optional<Role> getByRoleName(RoleName roleAdmin) {
 		return roleRepo.findByRole(roleAdmin);
+	}
+
+	public Role takeRole(String name) {
+		Role role = new Role();
+		if(name.equals("ROLE_ADMIN")){
+			role = roleRepo.findByRole(RoleName.ROLE_ADMIN).get();			
+		}else {
+			role = roleRepo.findByRole(RoleName.ROLE_USER).get();
+		}		
+		return role;
 	}	
 
 }

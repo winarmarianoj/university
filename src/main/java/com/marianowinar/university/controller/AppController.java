@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.marianowinar.university.repository.RoleRepository;
 import com.marianowinar.university.service.application.AccountService;
 import com.marianowinar.university.service.application.AppService;
 import com.marianowinar.university.service.application.PersonService;
+import com.marianowinar.university.service.application.RoleService;
 import com.marianowinar.university.service.entity.Person;
+import com.marianowinar.university.service.entity.Role;
 import com.marianowinar.university.service.entity.source.Forgot;
 import com.marianowinar.university.service.entity.source.Register;
 import com.marianowinar.university.service.util.UserConnectedService;
@@ -34,6 +37,9 @@ public class AppController {
 	
 	@Autowired
 	UserConnectedService userConnected;
+	
+	@Autowired
+	RoleService roleServ;
 	
 	private String messages;
 
@@ -59,7 +65,13 @@ public class AppController {
 	}
 	
 	@GetMapping("/registers")
-	public String admin(Model model) {
+	public String admin(Model model, ModelMap mp) {
+		Role userRole = roleServ.takeRole("ROLE_USER");
+		Role adminRole = roleServ.takeRole("ROLE_ADMIN");
+		List<Role> roleList = new ArrayList<>();
+		roleList.add(userRole);
+		roleList.add(adminRole);
+		mp.put("roles", roleList);
 		model.addAttribute("register", new Register());
 		return "register";
 	}
@@ -83,6 +95,8 @@ public class AppController {
 			destiny = "redirect:/results";
 		}
 		return destiny;
+		
+		//<input th:field="*{type}" type="text" class="form-control" id="type" placeholder="Admin / Student">
 	}
 	
 	@PostMapping("/changeForgot")

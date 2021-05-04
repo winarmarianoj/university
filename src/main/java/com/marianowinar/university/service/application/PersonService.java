@@ -54,7 +54,7 @@ public class PersonService implements Services<Person>{
 	public String update(Person entity) {
 		String message = "";
 		if(create(entity)) {
-			message = "Admin fue modificado exitosamente en la BD!";
+			message = "La Cuenta fue modificado exitosamente en la BD!";
 		}else {
 			message = "No se pudo modificar o los datos son incorrectos.";
 		}
@@ -99,7 +99,7 @@ public class PersonService implements Services<Person>{
 	 * @param us Account nuevo
 	 * @return true o false
 	 */
-	public Person createAdmin(Register entity) {		
+	public Person createAdminUser(Register entity) {		
 		Person person = new Person();
 		if(!searchPersonNew(entity)) {			
 			person = factory.createPerson(entity);						

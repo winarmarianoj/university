@@ -11,5 +11,5 @@ import com.marianowinar.university.service.enums.RoleName;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long>{
 	public boolean existsByRole(Role role);
-	public Optional<Role> findByRole(RoleName roleAdmin);
+	public Optional<Role> findByRole(RoleName roleAdmin);	
 }

@@ -31,13 +31,13 @@ public class AppService {
 	 */
 	public String registered(Register entity) {
 		String message = "";
-		Person person = perServ.createAdmin(entity); 
+		Person person = perServ.createAdminUser(entity); 
 		Account us = accServ.createUser(entity); 		
 		
 		if(us != null) {
 			person.setAccount(us);
-			perServ.update(person);
-			message = "La Cuenta se ha creado satisfactoriamente. Puede loguearse!!! Bienvenido al Sitio";
+			message = perServ.update(person);
+			message = message + " // " + "La Cuenta se ha creado satisfactoriamente. Puede loguearse!!! Bienvenido al Sitio";
 		}else {
 			message = "Ha cargado datos erróneos, vuelva a intentarlo.";
 		}

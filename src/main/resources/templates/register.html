@@ -63,9 +63,12 @@
                                         </div>                                        
                                         <div class="col-md-4 mb-5">
                                             <label class="labels" for="typo">Indique Tipo Usuario:</label>
-                                            <input th:field="*{type}" type="text" class="form-control" id="type" placeholder="Admin / Student">
-                                        </div>
-                                        
+                                            <div>
+                                            	<select class="form-control" th:field="*{type}" >
+				                                	<option th:each="role :${roles}" th:value="${role.id}" th:text="${role.role}"></option>				                                
+				                            	</select>
+                                            </div>                                            
+                                        </div>                                        
                                 </div>                                
 
                                 <!-- BUTTON REGISTER BLUE -->

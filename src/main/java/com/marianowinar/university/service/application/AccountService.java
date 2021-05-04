@@ -138,7 +138,7 @@ public class AccountService implements Services<Account>{
 		account.setEnabled(true);
 		account.setLegajo(entity.getLegajo());
 		
-		if(entity.getType().equals("Admin")) {
+		if(entity.getType().equals(String.valueOf(RoleName.ROLE_ADMIN))) { 
 			role = roleServ.getByRoleName(RoleName.ROLE_ADMIN).get();
 		}else {
 			role = roleServ.getByRoleName(RoleName.ROLE_USER).get();
