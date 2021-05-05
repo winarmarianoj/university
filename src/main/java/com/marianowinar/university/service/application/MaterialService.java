@@ -29,34 +29,28 @@ public class MaterialService implements Services<Material>{
 	}
 	
 	@Override
-	public boolean create(Material entity) {
-		boolean res = false;
+	public String create(Material entity) {
+		String result = "";
 		try {
 			valMat.validNameMaterial(entity);
 			matRepo.save(entity);
-			res = true;
+			result = "La Materia fue Salvada y Agregada exitosamente a BD!";
 		}catch(MaterialException e) {
 			errors.logError(e.getError());
+			result = e.getError() + " // " + "La Materia No se pudo modificar o los datos son incorrectos.";
 		}
-		return res;
+		return result;
 	}
 
 	@Override
 	public String update(Material entity) {
 		String message = "";
-		boolean res = false;
 		for(Material ele : viewAll()) {
 			if(ele.getId() == entity.getId()) {
-				create(entity);
-				message = "La Materia fue modificada exitosamente en la BD!";
-				res = true;
+				message = create(entity);
 				break;
 			}
-		}
-		
-		if(!res) {
-			message = "No se pudo modificar o los datos son incorrectos.";
-		}
+		}		
 		return message;
 	}
 

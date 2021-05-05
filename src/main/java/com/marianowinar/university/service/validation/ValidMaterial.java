@@ -1,5 +1,7 @@
 package com.marianowinar.university.service.validation;
 
+import java.util.regex.Pattern;
+
 import com.marianowinar.university.service.entity.Material;
 import com.marianowinar.university.service.exception.material.InvalidCapacityMaterialException;
 import com.marianowinar.university.service.exception.material.InvalidDetailException;
@@ -8,8 +10,9 @@ import com.marianowinar.university.service.exception.material.InvalidNameMateria
 import com.marianowinar.university.service.exception.material.InvalidSubscribedException;
 import com.marianowinar.university.service.exception.material.MaterialException;
 import com.marianowinar.university.service.exception.material.NullMaterialException;
+import com.marianowinar.university.service.exception.person.InvalidLastNameException;
 
-public class ValidMaterial {
+public class ValidMaterial extends Validator{
 	
 	private static ValidMaterial validMaterial;
 	
@@ -36,11 +39,19 @@ public class ValidMaterial {
 	public void validName(String name) throws InvalidNameMaterialException {
 		if(name == null)
 			throw new InvalidNameMaterialException("EL nombre es nulo");
+		
+		if(validateString(name)){
+			throw new InvalidNameMaterialException("EL nombre no es válido");
+        }
 	}
 
 	public void validDetail(String detail) throws InvalidDetailException {
 		if(detail == null)
 			throw new InvalidDetailException("El Detalle es nulo");
+		
+		if(validateString(detail)){
+			throw new InvalidDetailException("El Detalle no es válido");
+        }
 	}
 
 	public void validSubscribed(String subscribed) throws InvalidSubscribedException {
@@ -48,7 +59,7 @@ public class ValidMaterial {
 			throw new InvalidSubscribedException("Subscriptos es nulo");
 		
 		int subs = Integer.parseInt(subscribed);
-		if(subs < 0 && subs > 100)
+		if(subs < SUBSCRIPTION_MENOR && subs > SUBSCRIPTION_MAYOR)
 			throw new InvalidSubscribedException("Subscriptos es incorrecta");
 	}
 
@@ -57,7 +68,7 @@ public class ValidMaterial {
 			throw new InvalidCapacityMaterialException("la capacidad es nula");
 		
 		int capa = Integer.parseInt(capacity);
-		if(capa < 0 && capa > 100)
+		if(capa < CAPACITY_MENOR && capa > CAPACITY_MAYOR)
 			throw new InvalidCapacityMaterialException("la capacidad es incorrecta");		
 	}
 
@@ -66,8 +77,17 @@ public class ValidMaterial {
 			throw new InvalidHourException("La hora es nula");
 		
 		int hours = Integer.parseInt(hour);
-		if(hours < 0 && hours > 24) 
+		if(hours < HOUR_MENOR && hours > HOUR_MAYOR) 
 			throw new InvalidHourException("La hora es incorrecta");		
 	}		
+	
+	private boolean validateString(String string) {
+        boolean isValid = false;
+
+        if (!Pattern.matches("^([a-zA-ZñÑ])+$", string))
+            isValid = true;
+
+        return isValid;
+    }	
 	
 }

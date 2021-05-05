@@ -6,7 +6,7 @@ import com.marianowinar.university.service.exception.role.InvalidRoleException;
 import com.marianowinar.university.service.exception.role.NullRoleException;
 import com.marianowinar.university.service.exception.role.RoleException;
 
-public class ValidRole {
+public class ValidRole extends Validator{
 	
 	private static ValidRole validRole;
 	

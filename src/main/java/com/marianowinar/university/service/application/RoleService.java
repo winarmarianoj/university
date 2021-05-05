@@ -31,16 +31,17 @@ public class RoleService implements Services<Role>{
 	}
 
 	@Override
-	public boolean create(Role entity) {
-		boolean res = false;
+	public String create(Role entity) {
+		String result = "";
 		try {
 			validRole.validCreateRole(entity);
 			roleRepo.save(entity);
-			res = true;
+			result = "El Role fue Salvada y Agregada exitosamente a BD!";
 		}catch(RoleException e) {
 			errors.logError(e.getError());
+			result = e.getError() + " // " + "El Role No se pudo modificar o los datos son incorrectos.";
 		}
-		return res;
+		return result;
 	}
 
 	@Override

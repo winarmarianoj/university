@@ -39,28 +39,22 @@ public class UserService implements Services<Person>{
 	}
 
 	@Override
-	public boolean create(Person entity) {
-		boolean res = false;
-		
+	public String create(Person entity) {
+		String result = "";		
 		try {
 			valPer.validPerson(entity);
 			userRepo.save(entity);
-			res = true;
+			result = "El Usuario fue Salvada y Agregada exitosamente a BD!";
 		}catch(PersonException e) {
 			errors.logError(e.getError());
+			result = e.getError() + " // " + "El Usuario No se pudo modificar o los datos son incorrectos.";
 		}
-		return res;
+		return result;
 	}
 
 	@Override
 	public String update(Person entity) {
-		String message = "";
-		if(create(entity)) {
-			message = "Student fue modificado exitosamente en la BD!";
-		}else {
-			message = "No se pudo modificar o los datos son incorrectos.";
-		}
-		return message;
+		return create(entity);
 	}
 
 	@Override

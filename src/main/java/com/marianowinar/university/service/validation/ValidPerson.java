@@ -11,7 +11,7 @@ import com.marianowinar.university.service.exception.person.InvalidTypePersonExc
 import com.marianowinar.university.service.exception.person.NullPersonException;
 import com.marianowinar.university.service.exception.person.PersonException;
 
-public class ValidPerson {
+public class ValidPerson extends Validator{
 	
 	private static ValidPerson types;
 	
@@ -37,13 +37,18 @@ public class ValidPerson {
 		if(type == null)
 			throw new InvalidTypePersonException("Tipo de Usuario es nulo");
 		
-		if(!type.equals("Admin") && !type.equals("Student") && !type.equals("Professor"))
+		if(!type.equals(ADMIN) && !type.equals(USERS) && !type.equals(PROFESSOR))
             throw new InvalidTypePersonException("type");
 	}
 	
 	public void validatePhone(String phone) throws InvalidPhoneException {
 		if(phone == null)
-			throw new InvalidPhoneException("Phone es nulo");		
+			throw new InvalidPhoneException("Phone es nulo");	
+		
+		String regex = "^1(3|4|5|7|8)\\d{9}$";
+		int number = Integer.parseInt(phone);
+		if (!Pattern.matches(regex, phone))
+			throw new InvalidPhoneException("Phone no es válido");
 	}
 	
 	public void validateEmail(String email) throws InvalidMailException{		
@@ -78,6 +83,6 @@ public class ValidPerson {
             isValid = true;
 
         return isValid;
-    }
+    }	
 	
 }

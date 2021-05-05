@@ -36,17 +36,17 @@ public class ProfessorService implements Services<Professor>{
 	}
 	
 	@Override
-	public boolean create(Professor entity) {
-		boolean res = false;
-		
+	public String create(Professor entity) {
+		String result = "";		
 		try {
 			valPer.validPerson(entity);
 			profRepo.save(entity);
-			res = true;
+			result = "El Professor fue Salvada y Agregada exitosamente a BD!";
 		}catch(PersonException e) {
 			errors.logError(e.getError());
+			result = e.getError() + " // " + "El Professor No se pudo modificar o los datos son incorrectos.";
 		}
-		return res;
+		return result;
 	}
 
 	@Override
@@ -58,13 +58,7 @@ public class ProfessorService implements Services<Professor>{
 		prof.setName(entity.getName());
 		prof.setPhone(entity.getPhone());
 		prof.setSurname(entity.getSurname());
-		
-		if(create(prof)) {
-			message = "El Profesor fue modificado exitosamente en la BD!";
-		}else {
-			message = "No se pudo modificar o los datos son incorrectos.";
-		}
-		return message;
+		return create(prof);
 	}
 
 	@Override
@@ -126,11 +120,7 @@ public class ProfessorService implements Services<Professor>{
 		String message = "";
 		if(!searchProfNew(entity)) {
 			Professor prof = factory.createProfessor(entity);
-			if(create(prof)) {
-				message = "El Profesor fue creado con éxito!!";
-			}else {
-				message = "No pudo ser creado el Profesor en la BD. Vuelva a intentarlo.";
-			}
+			message = create(prof);
 		}
 		return message;
 	}

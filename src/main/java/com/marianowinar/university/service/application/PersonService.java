@@ -37,28 +37,22 @@ public class PersonService implements Services<Person>{
 	}
 	
 	@Override
-	public boolean create(Person entity) {
-		boolean res = false;
-		
+	public String create(Person entity) {
+		String result = "";		
 		try {
 			valPer.validPerson(entity);
 			perRepo.save(entity);
-			res = true;
+			result = "La Persona fue Salvada y Agregada exitosamente a BD!";
 		}catch(PersonException e) {
 			errors.logError(e.getError());
+			result = e.getError() + " // " + "La Persona No se pudo modificar o los datos son incorrectos.";
 		}
-		return res;
+		return result;
 	}
 
 	@Override
 	public String update(Person entity) {
-		String message = "";
-		if(create(entity)) {
-			message = "La Cuenta fue modificado exitosamente en la BD!";
-		}else {
-			message = "No se pudo modificar o los datos son incorrectos.";
-		}
-		return message;
+		return create(entity);
 	}
 
 	@Override

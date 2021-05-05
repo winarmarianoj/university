@@ -43,27 +43,22 @@ public class AccountService implements Services<Account>{
 	}
 
 	@Override
-	public boolean create(Account entity) {
-		boolean res = false;
+	public String create(Account entity) {
+		String result = "";
 		try{			
 			valAcc.validCreateAccount(entity);
 			accRepo.save(entity);
-			res = true;			
+			result = "Cuenta Salvada y Agregada exitosamente a BD!";
 		}catch(AccountException e) {
 			errors.logError(e.getError());
+			result = e.getError() + " // " + "No se pudo modificar o los datos son incorrectos.";
 		}
-		return res;
+		return result;
 	}
 
 	@Override
 	public String update(Account entity) {
-		String message = "";
-		if(create(entity)) {
-			message = "La Cuenta fue modificada exitosamente en la BD!";
-		}else {
-			message = "No se pudo modificar o los datos son incorrectos.";
-		}
-		return message;
+		return create(entity);
 	}
 
 	@Override
