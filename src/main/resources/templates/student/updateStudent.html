@@ -11,24 +11,18 @@
       <!-- INIT CENTRAL BODY -->
       <div class="content">
 
-        <section class="col-12 offset-fixed">
-            <a class="btn btn-yellow" href="/user/student/update">Update Profile</a>
-            <a class="btn btn-success" href="/user/student/delete">Delete Profile</a>
-            <a class="btn btn-primary" href="/user/student/subscribed">Materials Subscripted</a>
-            <section class="my-4">
-				<form th:action="@{/logout}" method="post">
-			          <input type="submit" value="Cerrar Sesion / Logout"/>
-			    </form>	        
-			</section>
-        </section>
-        
-        <!-- INIT WRAPPER -->
-          <div class="wrapper my-5">
-
-              <div class="container">
-                <div class="row">                  
-
-                  <section class="columna2 col-10 offset-fixed f-right">
+	        <section class="col-12 offset-fixed">
+	            <a class="btn btn-yellow" href="/user/student/update">Update Profile</a>
+	            <a class="btn btn-success" href="/user/student/delete">Delete Profile</a>
+	            <a class="btn btn-primary" href="/user/student/subscribed">Materials Subscripted</a>
+	            <section class="my-4">
+					<form th:action="@{/logout}" method="post">
+				          <input type="submit" value="Cerrar Sesion / Logout"/>
+				    </form>	        
+				</section>
+	        </section>
+	        
+	        <section class="columna2 col-10 offset-fixed f-right">
                       <!--INIT FORM ACCOUNT-->
                             <form th:object="${register}" th:action="@{/user/student/update}" method="POST"  class="needs-validation" novalidate>
                                 <div class="row">
@@ -107,20 +101,13 @@
 		                      </div>
 		                      <!--END FORM OR TABLE -->
 		                  </div>
-		          </section> 
-                </div>      
-              </div>
-              <!--END CONTAINER -->
-          </div>
-          <!-- END WRAPPER -->
+		          </section>  
 
-      </div>
-      <!-- END CENTRAL BODY -->
-
+	      </div>
+	      <!-- END CENTRAL BODY -->
+		<footer th:insert="fragmens/fragmentUsers :: footer"></footer>
     </div>
 	<!-- END MAIN PANEL -->
-    
-    <footer th:insert="fragmens/fragmentUsers :: footer"></footer>
 	<div th:insert="fragmens/fragmentUsers :: scripts"></div>
 </body>
 </html>

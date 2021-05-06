@@ -44,10 +44,9 @@ public class ValidPerson extends Validator{
 	public void validatePhone(String phone) throws InvalidPhoneException {
 		if(phone == null)
 			throw new InvalidPhoneException("Phone es nulo");	
-		
-		String regex = "^1(3|4|5|7|8)\\d{9}$";
+				
 		int number = Integer.parseInt(phone);
-		if (!Pattern.matches(regex, phone))
+		if (!Pattern.matches(REGEX_PHONE, phone))
 			throw new InvalidPhoneException("Phone no es válido");
 	}
 	
@@ -55,7 +54,7 @@ public class ValidPerson extends Validator{
         if (email == null) 
         	throw new InvalidMailException("Email es nulo");
 
-        if (!Pattern.matches("^([a-zA-Z0-9-._ñ]+)@([a-zA-Z0-9-._ñ]+).([a-zA-Z]{2,5})$",email)) 
+        if (!Pattern.matches(REGEX_EMAIL,email)) 
         	throw new InvalidMailException(email);
     }
 	
@@ -79,7 +78,7 @@ public class ValidPerson extends Validator{
     private boolean validateString(String string) {
         boolean isValid = false;
 
-        if (!Pattern.matches("^([a-zA-ZñÑ])+$", string))
+        if (!Pattern.matches(REGEX_NAMES, string))
             isValid = true;
 
         return isValid;

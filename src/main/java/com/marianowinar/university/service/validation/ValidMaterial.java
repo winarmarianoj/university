@@ -84,7 +84,7 @@ public class ValidMaterial extends Validator{
 	private boolean validateString(String string) {
         boolean isValid = false;
 
-        if (!Pattern.matches("^([a-zA-ZñÑ])+$", string))
+        if (!Pattern.matches(REGEX_NAMES, string))
             isValid = true;
 
         return isValid;

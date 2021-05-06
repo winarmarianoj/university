@@ -46,7 +46,7 @@ public class ValidAccount extends Validator{
 		if(legajo == null)
 			throw new InvalidDniException("El Legajo es nulo");
 		
-		if (!Pattern.matches("^([a-zA-ZñÑ0-9])+$", legajo))
+		if (!Pattern.matches(REGEX_LEGAJO, legajo))
 			throw new InvalidDniException("El Legajo es invalido");
 	}
 	
